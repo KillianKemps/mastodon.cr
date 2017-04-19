@@ -17,7 +17,7 @@ describe Mastodon::REST::Client do
     end
   end
 
-  describe ".notifications(id)" do
+  describe ".notification(id)" do
     it "Response should be a Mastodon::Response::Notification" do
       notification.should be_a Mastodon::Response::Notification
     end

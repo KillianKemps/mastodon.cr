@@ -45,7 +45,7 @@ module Mastodon
       end
 
       {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
-      def account_{{ method.id }}(id)
+      def {{ method.id }}(id)
         response = post("#{ACCOUNTS_BASE}/#{id}/{{ method.id }}")
         Mastodon::Response::Relationship.from_json(response)
       end

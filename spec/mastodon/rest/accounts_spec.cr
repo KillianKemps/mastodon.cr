@@ -36,9 +36,9 @@ def statuses
 end
 
 {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
-def account_{{ method.id }}
+def {{ method.id }}
   stub_post("/api/v1/accounts/1/{{ method.id }}", "relationship")
-  client.account_{{ method.id }}(1)
+  client.{{ method.id }}(1)
 end
 {% end %}
 
@@ -93,26 +93,26 @@ describe Mastodon::REST::Client do
   end
 
   describe ".block" do
-    it "Response should be a Mastodon::Response::Account" do
-      block.should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Response::Relationship" do
+      block.should be_a Mastodon::Response::Relationship
     end
   end
 
   describe ".unblock" do
-    it "Response should be a Mastodon::Response::Account" do
-      unblock.should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Response::Relationship" do
+      unblock.should be_a Mastodon::Response::Relationship
     end
   end
 
   describe ".mute" do
-    it "Response should be a Mastodon::Response::Account" do
-      mute.should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Response::Relationship" do
+      mute.should be_a Mastodon::Response::Relationship
     end
   end
 
   describe ".unmute" do
-    it "Response should be a Mastodon::Response::Account" do
-      unmute.should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Response::Relationship" do
+      unmute.should be_a Mastodon::Response::Relationship
     end
   end
 
