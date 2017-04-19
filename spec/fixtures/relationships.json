@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "following": false,
+    "followed_by": false,
+    "blocking": false,
+    "muting": false,
+    "requested": false
+  },
+  {
+    "id": 2,
+    "following": false,
+    "followed_by": false,
+    "blocking": false,
+    "muting": false,
+    "requested": false
+  },
+  {
+    "id": 3,
+    "following": false,
+    "followed_by": false,
+    "blocking": false,
+    "muting": false,
+    "requested": false
+  }
+]

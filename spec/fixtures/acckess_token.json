@@ -1,0 +1,6 @@
+{
+  "access_token": "ACCESS_TOKEN",
+  "token_type": "bearer",
+  "scope": "read",
+  "created_at": 1492394109
+}
