@@ -15,19 +15,22 @@ def follow_requests
   client.follow_requests
 end
 
-def authorize_follow_request
-  stub_post_no_return("/api/v1/follow_requests/1/authorize")
-  client.authorize_follow_request(1)
+def authorize_follow_request(id)
+  stub_post_no_return("/api/v1/follow_requests/#{id}/authorize")
+  client.authorize_follow_request(id)
 end
 
-def reject_follow_request
-  stub_post_no_return("/api/v1/follow_requests/1/reject")
-  client.reject_follow_request(1)
+def reject_follow_request(id)
+  stub_post_no_return("/api/v1/follow_requests/#{id}/reject")
+  client.reject_follow_request(id)
 end
 
-def follows
-  stub_post("/api/v1/follows", "account", "uri=user%40foobar")
-  client.follows("user@foobar")
+def follows(username)
+  forms = HTTP::Params.build do |form|
+    form.add "uri", username
+  end
+  stub_post("/api/v1/follows", "account", forms)
+  client.follows(username)
 end
 
 def instance
@@ -78,19 +81,19 @@ describe Mastodon::REST::Client do
 
   describe ".authorize_follow_request" do
     it "Response should be no return" do
-      authorize_follow_request.should be "{}"
+      authorize_follow_request(1).should be "{}"
     end
   end
 
   describe ".reject_follow_request" do
     it "Response should be no return" do
-      reject_follow_request.should be "{}"
+      reject_follow_request(1).should be "{}"
     end
   end
 
   describe ".follows(username)" do
     it "Response should be a Mastodon::Response::Account" do
-      follows.should be_a Mastodon::Response::Account
+      follows("user@domain").should be_a Mastodon::Response::Account
     end
   end
 
