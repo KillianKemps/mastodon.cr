@@ -84,15 +84,15 @@ module Mastodon
 
       private def proccess_response(response : HTTP::Client::Response) : String
         case response.status_code
-        when 200..299
-          return response.body
-        else
-          process_error(response)
+          when 200..299
+            return response.body
+          else
+            process_error(response)
         end
         return "{}"
       end
 
-      private def process_error(response)
+      private def process_error(response : HTTP::Client::Response)
         case response.content_type
           when "application/json"
             error = Mastodon::Response::Error.from_json(response.body)
