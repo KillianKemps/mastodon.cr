@@ -3,14 +3,13 @@ require "json"
 require "oauth2"
 require "./api"
 require "./oauth"
+require "./error"
 
 module Mastodon
   module REST
     class Client
       include Mastodon::REST::Api
       include Mastodon::REST::OAuth
-
-      class ServerError < Exception; end
 
       getter  url : String
       getter! access_token : OAuth2::AccessToken::Bearer?
@@ -54,19 +53,9 @@ module Mastodon
           when 200..299
             return response.body
           else
-            process_error(response)
+            raise Mastodon::REST::Error.new(response)
         end
         return "{}"
-      end
-
-      private def process_error(response : HTTP::Client::Response)
-        case response.content_type
-          when "application/json"
-            error = Mastodon::Response::Error.from_json(response.body)
-            raise Client::ServerError.new("#{response.status_code} #{error.error}")
-          else
-            raise Client::ServerError.new("#{response.status_code} #{response.status_message}")
-        end
       end
     end
   end

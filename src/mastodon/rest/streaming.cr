@@ -20,7 +20,7 @@ module Mastodon
                 end
               end
             else
-              process_error(response)
+              raise Mastodon::REST::Error.new(response)
           end
         end
       end
