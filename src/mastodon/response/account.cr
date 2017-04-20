@@ -8,6 +8,7 @@ module Mastodon
         id: Int32,
         username: String,
         acct: String,
+        display_name: String,
         locked: Bool,
         created_at: { type: Time, converter: Time::Format.new("%Y-%m-%dT%T") },
         followers_count: Int32,
