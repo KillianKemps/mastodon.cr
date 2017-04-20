@@ -28,12 +28,20 @@ module Mastodon
         Mastodon::Response::Account.from_json(response)
       end
 
-      {% for method in {"followers", "following"} %}
-      def {{ method.id }}(id)
-        response = get("#{ACCOUNTS_BASE}/#{id}/{{ method.id }}")
+      def followers(id, max_id = nil, since_id = nil, limit = 40)
+        params = HTTP::Params.build do |param|
+          param.add "max_id", "#{max_id}" unless max_id.nil?
+          param.add "since_id", "#{since_id}" unless since_id.nil?
+          param.add "limit", "#{limit}" if limit != 40 && limit <= 80
+        end
+        response = get("#{ACCOUNTS_BASE}/#{id}/followers", params)
         Array(Mastodon::Response::Account).from_json(response)
       end
-      {% end %}
+
+      def following(id)
+        response = get("#{ACCOUNTS_BASE}/#{id}/following")
+        Array(Mastodon::Response::Account).from_json(response)
+      end
 
       def statuses(id, only_media = false, exclude_replies = false)
         params = HTTP::Params.build do |form|
