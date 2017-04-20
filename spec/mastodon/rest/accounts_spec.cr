@@ -23,12 +23,21 @@ def update_credentials(display_name = "", note = "", avatar = "", header = "")
   client.update_credentials(display_name, note, avatar, header)
 end
 
-{% for method in {"followers", "following"} %}
-def {{ method.id }}(id)
-  stub_get("/api/v1/accounts/#{id}/{{ method.id }}", "accounts")
-  client.{{ method.id }}(id)
+def followers(id, max_id = nil, since_id = nil, limit = 40)
+  params = HTTP::Params.build do |param|
+    param.add "max_id", "#{max_id}" unless max_id.nil?
+    param.add "since_id", "#{since_id}" unless since_id.nil?
+    param.add "limit", "#{limit}" if limit != 40 && limit <= 80
+  end
+  query = "?#{params}" unless params.empty?
+  stub_get("/api/v1/accounts/#{id}/followers#{query}", "accounts")
+  client.followers(id, max_id, since_id, limit)
 end
-{% end %}
+
+def following(id)
+  stub_get("/api/v1/accounts/#{id}/following", "accounts")
+  client.following(id)
+end
 
 def statuses(id)
   stub_get("/api/v1/accounts/#{id}/statuses", "statuses")
@@ -74,7 +83,7 @@ describe Mastodon::REST::Client do
     end
   end
 
-  describe ".followers(id)" do
+  describe ".followers(id, max_id, since_id, limit)" do
     it "Response should be a Array(Mastodon::Response::Account)" do
       followers(1).should be_a Array(Mastodon::Response::Account)
     end
