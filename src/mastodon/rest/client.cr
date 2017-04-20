@@ -2,11 +2,13 @@ require "http/client"
 require "json"
 require "oauth2"
 require "./api"
+require "./oauth"
 
 module Mastodon
   module REST
     class Client
       include Mastodon::REST::Api
+      include Mastodon::REST::OAuth
 
       class ServerError < Exception; end
 
@@ -24,56 +26,21 @@ module Mastodon
         authenticate(access_token)
       end
 
-      def authenticate(access_token : String)
-        @access_token = OAuth2::AccessToken::Bearer.new(access_token, 172_800)
-        @access_token.not_nil!.authenticate(@http_client)
-      end
-
-      def get_access_token_using_username_password(client_id = "", client_secret = "", scopes = "read", username = "", password = "") : OAuth2::AccessToken::Bearer
-        response_body = post("/oauth/token", {
-          "client_id" => client_id,
-          "client_secret" => client_secret,
-          "scope" => scopes,
-          "grant_type" => "password",
-          "username" => username,
-          "password" => password
-        })
-        json = JSON.parse(response_body)
-        OAuth2::AccessToken::Bearer.new(json["access_token"].to_s, 172_800)
-      end
-
-      def get(path : String, params = {} of String => String) : String
-        query = HTTP::Params.from_hash(params)
-        get(path, query)
-      end
-
-      def get(path : String, params : String = "") : String
+      def get(path : String, params : String | Hash(String, String) = "") : String
+        params = HTTP::Params.from_hash(params) if params.is_a?(Hash)
         path += "?#{params}" unless params.empty?
         response = @http_client.get(path)
         proccess_response(response)
       end
 
-      def post(path : String, form = {} of String => String) : String
+      def post(path : String, form : String | Hash(String, String) = "") : String
         response = @http_client.post_form(path, form)
         proccess_response(response)
       end
 
-      def post(path : String, form : String = "") : String
-        response = @http_client.post_form(path, form)
-        proccess_response(response)
-      end
-
-      def patch(path : String, form = {} of String => String) : String
-        body = HTTP::Params.from_hash(form)
-        patch(path, body)
-      end
-
-      def patch(path : String, form : String = "") : String
-        request = HTTP::Request.new("PATCH", path, nil, form).tap do |request|
-          request.headers["Host"] = url
-          request.headers["Content-type"] = "application/x-www-form-urlencoded"
-        end
-        response = @http_client.exec(request)
+      def patch(path : String, form : String | Hash(String, String) = "") : String
+        form = HTTP::Params.from_hash(form) if form.is_a?(Hash)
+        response = @http_client.patch(path, HTTP::Headers{"Content-type" => "application/x-www-form-urlencoded"}, form)
         proccess_response(response)
       end
 
