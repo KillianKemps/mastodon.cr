@@ -42,6 +42,11 @@ client.authenticate(token.access_token)
 client = Mastodon::REST::Client.new(url: "mastodon.cloud", access_token: "ACCESS_TOKEN")
 ```
 
+## Todo
+
+* Link header support
+  * https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#selecting-ranges
+
 ## Contributing
 
 1. Fork it ( https://github.com/decors/mastodon.cr/fork )
