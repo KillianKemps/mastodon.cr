@@ -20,6 +20,9 @@ module Mastodon
       include Mastodon::REST::Statuses
       include Mastodon::REST::Streaming
       include Mastodon::REST::Timelines
+
+      DEFAULT_ACCOUNTS_LIMIT = 40
+      DEFAULT_STATUSES_LIMIT = 20
     end
   end
 end
