@@ -81,13 +81,13 @@ describe Mastodon::REST::Client do
 
   describe ".authorize_follow_request" do
     it "Response should be no return" do
-      authorize_follow_request(1).should be "{}"
+      authorize_follow_request(1).should eq "{}"
     end
   end
 
   describe ".reject_follow_request" do
     it "Response should be no return" do
-      reject_follow_request(1).should be "{}"
+      reject_follow_request(1).should eq "{}"
     end
   end
 
