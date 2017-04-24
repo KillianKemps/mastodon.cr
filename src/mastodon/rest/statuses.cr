@@ -49,7 +49,7 @@ module Mastodon
           param.add "since_id", "#{since_id}" unless since_id.nil?
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
-        response = post("#{STATUSES_BASE}/#{id}/{{ method.id }}", params)
+        response = get("#{STATUSES_BASE}/#{id}/{{ method.id }}", params)
         Collection(Entities::Account).from_json(response)
       end
       {% end %}
