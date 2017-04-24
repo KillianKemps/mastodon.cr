@@ -8,12 +8,12 @@ module Mastodon
 
       def notifications
         response = get("#{NOTIFICATIONS_BASE}")
-        Array(Mastodon::Response::Notification).from_json(response)
+        Array(Response::Notification).from_json(response)
       end
 
       def notification(id)
         response = get("#{NOTIFICATIONS_BASE}/#{id}")
-        Mastodon::Response::Notification.from_json(response)
+        Response::Notification.from_json(response)
       end
 
       def clear_notifications

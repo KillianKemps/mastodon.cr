@@ -6,7 +6,7 @@ module Mastodon
       def initialize(response : HTTP::Client::Response)
         case response.content_type
           when "application/json"
-            error = Mastodon::Response::Error.from_json(response.body)
+            error = Response::Error.from_json(response.body)
             super("#{response.status_code} #{error.error}")
           else
             super("#{response.status_code} #{response.status_message}")

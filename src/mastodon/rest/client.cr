@@ -53,7 +53,7 @@ module Mastodon
           when 200..299
             return response.body
           else
-            raise Mastodon::REST::Error.new(response)
+            raise REST::Error.new(response)
         end
         return "{}"
       end

@@ -20,7 +20,7 @@ module Mastodon
                 end
               end
             else
-              raise Mastodon::REST::Error.new(response)
+              raise REST::Error.new(response)
           end
         end
       end
@@ -29,9 +29,9 @@ module Mastodon
         proccess_streaming(path) do |event, data|
           case event
             when "update"
-              yield Mastodon::Response::Status.from_json(data), nil
+              yield Response::Status.from_json(data), nil
             when "notification"
-              yield nil, Mastodon::Response::Notification.from_json(data)
+              yield nil, Response::Notification.from_json(data)
             when "delete"
               # TODO
               next

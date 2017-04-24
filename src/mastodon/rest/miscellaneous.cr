@@ -11,7 +11,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("/api/v1/blocks", params)
-        Array(Mastodon::Response::Account).from_json(response)
+        Array(Response::Account).from_json(response)
       end
 
       def favourites(max_id = nil, since_id = nil, limit = Api::DEFAULT_STATUSES_LIMIT)
@@ -21,7 +21,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_STATUSES_LIMIT && limit <= 80
         end
         response = get("/api/v1/favourites")
-        Array(Mastodon::Response::Status).from_json(response)
+        Array(Response::Status).from_json(response)
       end
 
       def follow_requests(max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
@@ -31,7 +31,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("/api/v1/follow_requests", params)
-        Array(Mastodon::Response::Account).from_json(response)
+        Array(Response::Account).from_json(response)
       end
 
       def authorize_follow_request(id)
@@ -44,12 +44,12 @@ module Mastodon
 
       def follows(username)
         response = post("/api/v1/follows", { "uri" => "#{username}" })
-        Mastodon::Response::Account.from_json(response)
+        Response::Account.from_json(response)
       end
 
       def instance
         response = get("/api/v1/instance")
-        Mastodon::Response::Instance.from_json(response)
+        Response::Instance.from_json(response)
       end
 
       def mutes(max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
@@ -59,12 +59,12 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("/api/v1/mutes", params)
-        Array(Mastodon::Response::Account).from_json(response)
+        Array(Response::Account).from_json(response)
       end
 
       def reports
         response = get("/api/v1/reports")
-        Array(Mastodon::Response::Report).from_json(response)
+        Array(Response::Report).from_json(response)
       end
 
       def report(account_id, status_ids : Int32 | Array(Int32), comment = "")
@@ -81,7 +81,7 @@ module Mastodon
           form.add "comment", "#{comment}"
         end
         response = post("/api/v1/reports", forms)
-        Mastodon::Response::Report.from_json(response)
+        Response::Report.from_json(response)
       end
     end
   end

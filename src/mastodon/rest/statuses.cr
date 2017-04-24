@@ -8,7 +8,7 @@ module Mastodon
 
       def status(id)
         response = get("#{STATUSES_BASE}/#{id}")
-        Mastodon::Response::Status.from_json(response)
+        Response::Status.from_json(response)
       end
 
       def create_status(status, in_reply_to_id = nil, media_ids = [] of Int32, sensitive = false, spoiler_text = "", visibility = "")
@@ -25,7 +25,7 @@ module Mastodon
           form.add "visibility", "#{visibility}" if ["direct", "private", "unlisted", "public"].includes?(visibility)
         end
         response = post("#{STATUSES_BASE}", forms)
-        Mastodon::Response::Status.from_json(response)
+        Response::Status.from_json(response)
       end
 
       def delete_status(id)
@@ -34,12 +34,12 @@ module Mastodon
 
       def card(id)
         response = get("#{STATUSES_BASE}/#{id}/card")
-        Mastodon::Response::Card.from_json(response)
+        Response::Card.from_json(response)
       end
 
       def context(id)
         response = get("#{STATUSES_BASE}/#{id}/context")
-        Mastodon::Response::Context.from_json(response)
+        Response::Context.from_json(response)
       end
 
       {% for method in {"reblogged_by", "favourited_by"} %}
@@ -50,14 +50,14 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = post("#{STATUSES_BASE}/#{id}/{{ method.id }}", params)
-        Array(Mastodon::Response::Account).from_json(response)
+        Array(Response::Account).from_json(response)
       end
       {% end %}
 
       {% for method in {"reblog", "unreblog", "favourite", "unfavourite"} %}
       def {{ method.id }}(id)
         response = post("#{STATUSES_BASE}/#{id}/{{ method.id }}")
-        Mastodon::Response::Status.from_json(response)
+        Response::Status.from_json(response)
       end
       {% end %}
     end

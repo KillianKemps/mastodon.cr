@@ -5,26 +5,27 @@ module Mastodon
   module REST
     module Accounts
       ACCOUNTS_BASE = "/api/v1/accounts"
+
       def account(id)
         response = get("#{ACCOUNTS_BASE}/#{id}")
-        Mastodon::Response::Account.from_json(response)
+        Response::Account.from_json(response)
       end
 
       def verify_credentials
         response = get("#{ACCOUNTS_BASE}/verify_credentials")
-        Mastodon::Response::Account.from_json(response)
+        Response::Account.from_json(response)
       end
 
       def update_credentials(display_name = "", note = "", avatar = "", header = "")
         forms = HTTP::Params.build do |form|
           form.add "display_name", "#{display_name}" unless display_name.empty?
           form.add "note", "#{note}" unless note.empty?
-          form.add "avatar", Mastodon::Utils::Image.base64_encode(avatar) unless avatar.empty?
-          form.add "header",  Mastodon::Utils::Image.base64_encode(avatar) unless header.empty?
+          form.add "avatar", Utils::Image.base64_encode(avatar) unless avatar.empty?
+          form.add "header",  Utils::Image.base64_encode(avatar) unless header.empty?
         end
         raise ArgumentError.new("Incorrect updating data") if forms.empty?
         response = patch("#{ACCOUNTS_BASE}/update_credentials", forms)
-        Mastodon::Response::Account.from_json(response)
+        Response::Account.from_json(response)
       end
 
       def followers(id, max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
@@ -34,7 +35,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/followers", params)
-        Array(Mastodon::Response::Account).from_json(response)
+        Array(Response::Account).from_json(response)
       end
 
       def following(id, max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
@@ -44,7 +45,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/following")
-        Array(Mastodon::Response::Account).from_json(response)
+        Array(Response::Account).from_json(response)
       end
 
       def statuses(id, only_media = false, exclude_replies = false, max_id = nil, since_id = nil, limit = Api::DEFAULT_STATUSES_LIMIT)
@@ -56,13 +57,13 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_STATUSES_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/statuses", params)
-        Array(Mastodon::Response::Status).from_json(response)
+        Array(Response::Status).from_json(response)
       end
 
       {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
       def {{ method.id }}(id)
         response = post("#{ACCOUNTS_BASE}/#{id}/{{ method.id }}")
-        Mastodon::Response::Relationship.from_json(response)
+        Response::Relationship.from_json(response)
       end
       {% end %}
 
@@ -78,7 +79,7 @@ module Mastodon
           end
         end
         response = get("#{ACCOUNTS_BASE}/relationships", params)
-        Array(Mastodon::Response::Relationship).from_json(response)
+        Array(Response::Relationship).from_json(response)
       end
 
       def search_accounts(name, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
@@ -87,7 +88,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/search", params)
-        Array(Mastodon::Response::Account).from_json(response)
+        Array(Response::Account).from_json(response)
       end
     end
   end
