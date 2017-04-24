@@ -51,7 +51,7 @@ def statuses(id, only_media = false, exclude_replies = false, max_id = nil, sinc
     param.add "exclude_replies", "" if exclude_replies
     param.add "max_id", "#{max_id}" unless max_id.nil?
     param.add "since_id", "#{since_id}" unless since_id.nil?
-    param.add "limit", "#{limit}" if limit != 20 && limit <= 80
+    param.add "limit", "#{limit}" if limit != 20 && limit <= 40
   end
   stub_get("/api/v1/accounts/#{id}/statuses", "statuses")
   client.statuses(id, only_media, exclude_replies, max_id, since_id, limit)

@@ -54,7 +54,7 @@ module Mastodon
           param.add "exclude_replies", "" if exclude_replies
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= 80
+          param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= 40
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/statuses", params)
         Collection(Entities::Status).from_json(response)
