@@ -34,14 +34,27 @@ def followers(id, max_id = nil, since_id = nil, limit = 40)
   client.followers(id, max_id, since_id, limit)
 end
 
-def following(id)
-  stub_get("/api/v1/accounts/#{id}/following", "accounts")
-  client.following(id)
+def following(id, max_id = nil, since_id = nil, limit = 40)
+  params = HTTP::Params.build do |param|
+    param.add "max_id", "#{max_id}" unless max_id.nil?
+    param.add "since_id", "#{since_id}" unless since_id.nil?
+    param.add "limit", "#{limit}" if limit != 40 && limit <= 80
+  end
+  query = "?#{params}" unless params.empty?
+  stub_get("/api/v1/accounts/#{id}/following#{query}", "accounts")
+  client.following(id, max_id, since_id, limit)
 end
 
-def statuses(id)
+def statuses(id, only_media = false, exclude_replies = false, max_id = nil, since_id = nil, limit = 20)
+  params = HTTP::Params.build do |param|
+    param.add "only_media", "" if only_media
+    param.add "exclude_replies", "" if exclude_replies
+    param.add "max_id", "#{max_id}" unless max_id.nil?
+    param.add "since_id", "#{since_id}" unless since_id.nil?
+    param.add "limit", "#{limit}" if limit != 20 && limit <= 80
+  end
   stub_get("/api/v1/accounts/#{id}/statuses", "statuses")
-  client.statuses(id)
+  client.statuses(id, only_media, exclude_replies, max_id, since_id, limit)
 end
 
 {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
@@ -56,8 +69,13 @@ def relationships(id)
   client.relationships(id)
 end
 
-def search_accounts(name, limit)
-  stub_get("/api/v1/accounts/search?q=#{name}&limit=#{limit}", "accounts")
+def search_accounts(name, limit = 40)
+  params = HTTP::Params.build do |param|
+    param.add "q", "#{name}"
+    param.add "limit", "#{limit}" if limit != 40 && limit <= 80
+  end
+  query = "?#{params}" unless params.empty?
+  stub_get("/api/v1/accounts/search#{query}", "accounts")
   client.search_accounts(name, limit)
 end
 
@@ -84,20 +102,20 @@ describe Mastodon::REST::Client do
   end
 
   describe ".followers(id, max_id, since_id, limit)" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      followers(1).should be_a Array(Mastodon::Entities::Account)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      followers(1).should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
-  describe ".following(id)" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      following(1).should be_a Array(Mastodon::Entities::Account)
+  describe ".following(id, max_id, since_id, limit)" do
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      following(1).should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
-  describe ".statuses(id)" do
-    it "Response should be a Array(Mastodon::Entities::Status)" do
-      statuses(1).should be_a Array(Mastodon::Entities::Status)
+  describe ".statuses(id, only_media, exclude_replies, max_id, since_id, limit)" do
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+      statuses(1).should be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end
 
@@ -125,15 +143,15 @@ describe Mastodon::REST::Client do
     end
   end
 
-  describe ".relationships(id)" do
-    it "Response should be a Array(Mastodon::Entities::Relationship)" do
-      relationships(1).should be_a Array(Mastodon::Entities::Relationship)
+  describe ".relationships(ids)" do
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Relationship)" do
+      relationships(1).should be_a Mastodon::Collection(Mastodon::Entities::Relationship)
     end
   end
 
   describe ".search_accounts(name, limit)" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      search_accounts("name", 10).should be_a Array(Mastodon::Entities::Account)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      search_accounts("name", 10).should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 end

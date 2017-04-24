@@ -12,8 +12,8 @@ end
 
 describe Mastodon::REST::Client do
   describe ".notifications" do
-    it "Response should be a Array(Mastodon::Entities::Notification)" do
-      notifications.should be_a Array(Mastodon::Entities::Notification)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Notification)" do
+      notifications.should be_a Mastodon::Collection(Mastodon::Entities::Notification)
     end
   end
 

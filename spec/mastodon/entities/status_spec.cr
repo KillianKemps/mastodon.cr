@@ -11,8 +11,8 @@ describe Mastodon::Entities do
     end
 
     it "initialize from JSON array" do
-      statuses = Array(Mastodon::Entities::Status).from_json(statuses_json)
-      statuses.should be_a Array(Mastodon::Entities::Status)
+      statuses = Mastodon::Collection(Mastodon::Entities::Status).from_json(statuses_json)
+      statuses.should be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
 
     it ".created_at should be a Time" do
@@ -29,6 +29,12 @@ describe Mastodon::Entities do
       status = Mastodon::Entities::Status.from_json(status_json)
       other_status = Mastodon::Entities::Status.from_json(status_json)
       status.should eq other_status
+    end
+
+    it ".next_id and .prev_id" do
+      statuses = Mastodon::Collection(Mastodon::Entities::Status).from_json(statuses_json)
+      statuses.next_id.should eq 1
+      statuses.prev_id.should eq 3
     end
   end
 end

@@ -53,8 +53,8 @@ def report
     form.add "account_id", "1"
     form.add "status_ids[]", "1"
     form.add "status_ids[]", "2"
-    form.add "status_ids[]",  "3"
-    form.add "comment",  ""
+    form.add "status_ids[]", "3"
+    form.add "comment", ""
   end
   stub_post("/api/v1/reports", "report", forms)
   client.report(1, [1, 2, 3])
@@ -62,20 +62,20 @@ end
 
 describe Mastodon::REST::Client do
   describe ".blocks" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      blocks.should be_a Array(Mastodon::Entities::Account)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      blocks.should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
   describe ".favourites" do
-    it "Response should be a Array(Mastodon::Entities::Status)" do
-      favourites.should be_a Array(Mastodon::Entities::Status)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+      favourites.should be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end
 
   describe ".follow_requests" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      follow_requests.should be_a Array(Mastodon::Entities::Account)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      follow_requests.should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
@@ -104,14 +104,14 @@ describe Mastodon::REST::Client do
   end
 
   describe ".mutes" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      mutes.should be_a Array(Mastodon::Entities::Account)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      mutes.should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
   describe ".reports" do
-    it "Response should be a Array(Mastodon::Entities::Report)" do
-      reports.should be_a Array(Mastodon::Entities::Report)
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Report)" do
+      reports.should be_a Mastodon::Collection(Mastodon::Entities::Report)
     end
   end
 

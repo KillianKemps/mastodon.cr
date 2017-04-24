@@ -5,12 +5,21 @@ def status(id)
   client.status(id)
 end
 
-def create_status(status)
+def create_status(status, in_reply_to_id = nil, media_ids = [] of Int32, sensitive = false, spoiler_text = "", visibility = "")
   forms = HTTP::Params.build do |form|
-    form.add "status", status
+    form.add "status", "#{status}"
+    form.add "in_reply_to_id", "#{in_reply_to_id}" unless in_reply_to_id.nil?
+    unless media_ids.empty?
+      media_ids.each do |id|
+        form.add "media_ids[]", "#{id}"
+      end
+    end
+    form.add "sensitive", "true" if sensitive
+    form.add "spoiler_text", "#{spoiler_text}" unless spoiler_text.empty?
+    form.add "visibility", "#{visibility}" if ["direct", "private", "unlisted", "public"].includes?(visibility)
   end
   stub_post("/api/v1/statuses", "status", forms)
-  client.create_status(status)
+  client.create_status(status, in_reply_to_id, media_ids, sensitive, spoiler_text, visibility)
 end
 
 def delete_status(id)
@@ -31,9 +40,15 @@ def context(id)
 end
 
 {% for method in {"reblogged_by", "favourited_by"} %}
-def {{ method.id }}(id)
-  stub_post("/api/v1/statuses/#{id}/{{ method.id }}", "accounts")
-  client.{{ method.id }}(id)
+def {{ method.id }}(id, max_id = nil, since_id = nil, limit = 40)
+  params = HTTP::Params.build do |param|
+    param.add "max_id", "#{max_id}" unless max_id.nil?
+    param.add "since_id", "#{since_id}" unless since_id.nil?
+    param.add "limit", "#{limit}" if limit != 40 && limit <= 80
+  end
+  query = "?#{params}" unless params.empty?
+  stub_get("/api/v1/statuses/#{id}/{{ method.id }}#{query}", "accounts")
+  client.{{ method.id }}(id, max_id, since_id, limit)
 end
 {% end %}
 
@@ -75,15 +90,15 @@ describe Mastodon::REST::Client do
     end
   end
 
-  describe ".reblogged_by(id)" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      reblogged_by(1).should be_a Array(Mastodon::Entities::Account)
+  describe ".reblogged_by(id, max_id, since_id, limit)" do
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      reblogged_by(1).should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
-  describe ".favourited_by(id)" do
-    it "Response should be a Array(Mastodon::Entities::Account)" do
-      favourited_by(1).should be_a Array(Mastodon::Entities::Account)
+  describe ".favourited_by(id, max_id, since_id, limit)" do
+    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      favourited_by(1).should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 

@@ -11,8 +11,8 @@ describe Mastodon::Entities do
     end
 
     it "initialize from JSON array" do
-      accounts = Array(Mastodon::Entities::Account).from_json(accounts_json)
-      accounts.should be_a Array(Mastodon::Entities::Account)
+      accounts = Mastodon::Collection(Mastodon::Entities::Account).from_json(accounts_json)
+      accounts.should be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
 
     it ".created_at should be a Time" do
@@ -24,6 +24,12 @@ describe Mastodon::Entities do
       account = Mastodon::Entities::Account.from_json(account_json)
       other_account = Mastodon::Entities::Account.from_json(account_json)
       account.should eq other_account
+    end
+
+    it ".next_id and .prev_id" do
+      accounts = Mastodon::Collection(Mastodon::Entities::Account).from_json(accounts_json)
+      accounts.next_id.should eq 1
+      accounts.prev_id.should eq 3
     end
   end
 end
