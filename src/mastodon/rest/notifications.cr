@@ -16,9 +16,14 @@ module Mastodon
         Response::Notification.from_json(response)
       end
 
+      def delete_notification(id)
+        post("#{NOTIFICATIONS_BASE}/dismiss/#{id}")
+      end
+
       def clear_notifications
         post("#{NOTIFICATIONS_BASE}/clear")
       end
+
     end
   end
 end
