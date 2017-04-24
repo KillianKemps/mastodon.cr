@@ -43,11 +43,11 @@ module Mastodon
       end
 
       {% for method in {"reblogged_by", "favourited_by"} %}
-      def {{ method.id }}(id, max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
+      def {{ method.id }}(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = post("#{STATUSES_BASE}/#{id}/{{ method.id }}", params)
         Array(Response::Account).from_json(response)

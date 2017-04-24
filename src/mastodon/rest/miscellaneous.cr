@@ -4,31 +4,31 @@ require "json"
 module Mastodon
   module REST
     module Miscellaneous
-      def blocks(max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
+      def blocks(max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("/api/v1/blocks", params)
         Array(Response::Account).from_json(response)
       end
 
-      def favourites(max_id = nil, since_id = nil, limit = Api::DEFAULT_STATUSES_LIMIT)
+      def favourites(max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != Api::DEFAULT_STATUSES_LIMIT && limit <= 80
+          param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= 80
         end
         response = get("/api/v1/favourites")
         Array(Response::Status).from_json(response)
       end
 
-      def follow_requests(max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
+      def follow_requests(max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("/api/v1/follow_requests", params)
         Array(Response::Account).from_json(response)
@@ -52,11 +52,11 @@ module Mastodon
         Response::Instance.from_json(response)
       end
 
-      def mutes(max_id = nil, since_id = nil, limit = Api::DEFAULT_ACCOUNTS_LIMIT)
+      def mutes(max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != Api::DEFAULT_ACCOUNTS_LIMIT && limit <= 80
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("/api/v1/mutes", params)
         Array(Response::Account).from_json(response)
