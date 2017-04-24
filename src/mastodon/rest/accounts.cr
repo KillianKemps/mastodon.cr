@@ -35,7 +35,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/followers", params)
-        Array(Entities::Account).from_json(response)
+        Collection(Entities::Account).from_json(response)
       end
 
       def following(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
@@ -45,7 +45,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/following")
-        Array(Entities::Account).from_json(response)
+        Collection(Entities::Account).from_json(response)
       end
 
       def statuses(id, only_media = false, exclude_replies = false, max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
@@ -57,7 +57,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/statuses", params)
-        Array(Entities::Status).from_json(response)
+        Collection(Entities::Status).from_json(response)
       end
 
       {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
@@ -79,7 +79,7 @@ module Mastodon
           end
         end
         response = get("#{ACCOUNTS_BASE}/relationships", params)
-        Array(Entities::Relationship).from_json(response)
+        Collection(Entities::Relationship).from_json(response)
       end
 
       def search_accounts(name, limit = DEFAULT_ACCOUNTS_LIMIT)
@@ -88,7 +88,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = get("#{ACCOUNTS_BASE}/search", params)
-        Array(Entities::Account).from_json(response)
+        Collection(Entities::Account).from_json(response)
       end
     end
   end

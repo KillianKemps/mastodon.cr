@@ -50,7 +50,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= 80
         end
         response = post("#{STATUSES_BASE}/#{id}/{{ method.id }}", params)
-        Array(Entities::Account).from_json(response)
+        Collection(Entities::Account).from_json(response)
       end
       {% end %}
 

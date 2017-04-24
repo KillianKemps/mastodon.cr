@@ -8,7 +8,7 @@ module Mastodon
 
       def notifications
         response = get("#{NOTIFICATIONS_BASE}")
-        Array(Entities::Notification).from_json(response)
+        Collection(Entities::Notification).from_json(response)
       end
 
       def notification(id)
