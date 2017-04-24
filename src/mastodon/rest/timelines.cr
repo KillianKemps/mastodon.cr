@@ -16,7 +16,7 @@ module Mastodon
         Collection(Entities::Status).from_json(response)
       end
 
-      def timeline_public(max_id = nil, since_id = nil, local = false, limit = DEFAULT_STATUSES_LIMIT)
+      def timeline_public(local = false, max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "local", "" if local
           param.add "max_id", "#{max_id}" unless max_id.nil?
@@ -27,7 +27,7 @@ module Mastodon
         Collection(Entities::Status).from_json(response)
       end
 
-      def timeline_tag(hashtag, max_id = nil, since_id = nil, local = false, limit = DEFAULT_STATUSES_LIMIT)
+      def timeline_tag(hashtag, local = false, max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "local", "" if local
           param.add "max_id", "#{max_id}" unless max_id.nil?
