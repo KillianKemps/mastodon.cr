@@ -13,8 +13,8 @@ end
 
 describe Mastodon::REST::Client do
   describe ".apps" do
-    it "Response should be a Mastodon::Response::App" do
-      apps.should be_a Mastodon::Response::App
+    it "Response should be a Mastodon::App" do
+      apps.should be_a Mastodon::App
     end
   end
 end

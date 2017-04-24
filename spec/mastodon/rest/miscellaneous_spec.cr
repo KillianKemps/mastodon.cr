@@ -62,20 +62,20 @@ end
 
 describe Mastodon::REST::Client do
   describe ".blocks" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      blocks.should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      blocks.should be_a Array(Mastodon::Entities::Account)
     end
   end
 
   describe ".favourites" do
-    it "Response should be a Array(Mastodon::Response::Status)" do
-      favourites.should be_a Array(Mastodon::Response::Status)
+    it "Response should be a Array(Mastodon::Entities::Status)" do
+      favourites.should be_a Array(Mastodon::Entities::Status)
     end
   end
 
   describe ".follow_requests" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      follow_requests.should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      follow_requests.should be_a Array(Mastodon::Entities::Account)
     end
   end
 
@@ -92,32 +92,32 @@ describe Mastodon::REST::Client do
   end
 
   describe ".follows(username)" do
-    it "Response should be a Mastodon::Response::Account" do
-      follows("user@domain").should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Entities::Account" do
+      follows("user@domain").should be_a Mastodon::Entities::Account
     end
   end
 
   describe ".instance" do
-    it "Response should be a Mastodon::Response::Instance" do
-      instance.should be_a Mastodon::Response::Instance
+    it "Response should be a Mastodon::Entities::Instance" do
+      instance.should be_a Mastodon::Entities::Instance
     end
   end
 
   describe ".mutes" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      mutes.should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      mutes.should be_a Array(Mastodon::Entities::Account)
     end
   end
 
   describe ".reports" do
-    it "Response should be a Array(Mastodon::Response::Report)" do
-      reports.should be_a Array(Mastodon::Response::Report)
+    it "Response should be a Array(Mastodon::Entities::Report)" do
+      reports.should be_a Array(Mastodon::Entities::Report)
     end
   end
 
   describe ".report(account_id, status_ids, comment)" do
-    it "Response should be a Mastodon::Response::Report" do
-      report.should be_a Mastodon::Response::Report
+    it "Response should be a Mastodon::Entities::Report" do
+      report.should be_a Mastodon::Entities::Report
     end
   end
 end

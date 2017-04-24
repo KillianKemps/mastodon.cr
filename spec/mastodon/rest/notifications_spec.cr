@@ -12,14 +12,14 @@ end
 
 describe Mastodon::REST::Client do
   describe ".notifications" do
-    it "Response should be a Array(Mastodon::Response::Notification)" do
-      notifications.should be_a Array(Mastodon::Response::Notification)
+    it "Response should be a Array(Mastodon::Entities::Notification)" do
+      notifications.should be_a Array(Mastodon::Entities::Notification)
     end
   end
 
   describe ".notification(id)" do
-    it "Response should be a Mastodon::Response::Notification" do
-      notification(1).should be_a Mastodon::Response::Notification
+    it "Response should be a Mastodon::Entities::Notification" do
+      notification(1).should be_a Mastodon::Entities::Notification
     end
   end
 end

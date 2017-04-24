@@ -11,7 +11,7 @@ module Mastodon
           "scopes" => scopes,
           "website" => website
         })
-        Response::App.from_json(response)
+        App.from_json(response)
       end
     end
   end

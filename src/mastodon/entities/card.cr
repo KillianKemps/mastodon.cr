@@ -1,7 +1,7 @@
 require "json"
 
 module Mastodon
-  module Response
+  module Entities
     class Card
 
       JSON.mapping({

@@ -1,14 +1,12 @@
 require "json"
 
 module Mastodon
-  module Response
-    class Mention
+  module Entities
+    class Tag
 
       JSON.mapping({
+        name: String,
         url: String,
-        username: String,
-        acct: String,
-        id: Int32,
       })
 
     end

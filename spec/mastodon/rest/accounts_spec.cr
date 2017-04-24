@@ -63,20 +63,20 @@ end
 
 describe Mastodon::REST::Client do
   describe ".account(id)" do
-    it "Response should be a Mastodon::Response::Account" do
-      account(1).should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Entities::Account" do
+      account(1).should be_a Mastodon::Entities::Account
     end
   end
 
   describe ".verify_credentials" do
-    it "Response should be a Mastodon::Response::Account" do
-      verify_credentials.should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Entities::Account" do
+      verify_credentials.should be_a Mastodon::Entities::Account
     end
   end
 
   describe ".update_credentials(display_name, note, avatar, header)" do
-    it "Response should be a Mastodon::Response::Account" do
-      update_credentials("DISPLAY_NAME").should be_a Mastodon::Response::Account
+    it "Response should be a Mastodon::Entities::Account" do
+      update_credentials("DISPLAY_NAME").should be_a Mastodon::Entities::Account
     end
     it "Expect raise ArgumentError" do
       expect_raises(ArgumentError) { update_credentials }
@@ -84,56 +84,56 @@ describe Mastodon::REST::Client do
   end
 
   describe ".followers(id, max_id, since_id, limit)" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      followers(1).should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      followers(1).should be_a Array(Mastodon::Entities::Account)
     end
   end
 
   describe ".following(id)" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      following(1).should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      following(1).should be_a Array(Mastodon::Entities::Account)
     end
   end
 
   describe ".statuses(id)" do
-    it "Response should be a Array(Mastodon::Response::Status)" do
-      statuses(1).should be_a Array(Mastodon::Response::Status)
+    it "Response should be a Array(Mastodon::Entities::Status)" do
+      statuses(1).should be_a Array(Mastodon::Entities::Status)
     end
   end
 
   describe ".block(id)" do
-    it "Response should be a Mastodon::Response::Relationship" do
-      block(1).should be_a Mastodon::Response::Relationship
+    it "Response should be a Mastodon::Entities::Relationship" do
+      block(1).should be_a Mastodon::Entities::Relationship
     end
   end
 
   describe ".unblock(id)" do
-    it "Response should be a Mastodon::Response::Relationship" do
-      unblock(1).should be_a Mastodon::Response::Relationship
+    it "Response should be a Mastodon::Entities::Relationship" do
+      unblock(1).should be_a Mastodon::Entities::Relationship
     end
   end
 
   describe ".mute(id)" do
-    it "Response should be a Mastodon::Response::Relationship" do
-      mute(1).should be_a Mastodon::Response::Relationship
+    it "Response should be a Mastodon::Entities::Relationship" do
+      mute(1).should be_a Mastodon::Entities::Relationship
     end
   end
 
   describe ".unmute(id)" do
-    it "Response should be a Mastodon::Response::Relationship" do
-      unmute(1).should be_a Mastodon::Response::Relationship
+    it "Response should be a Mastodon::Entities::Relationship" do
+      unmute(1).should be_a Mastodon::Entities::Relationship
     end
   end
 
   describe ".relationships(id)" do
-    it "Response should be a Array(Mastodon::Response::Relationship)" do
-      relationships(1).should be_a Array(Mastodon::Response::Relationship)
+    it "Response should be a Array(Mastodon::Entities::Relationship)" do
+      relationships(1).should be_a Array(Mastodon::Entities::Relationship)
     end
   end
 
   describe ".search_accounts(name, limit)" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      search_accounts("name", 10).should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      search_accounts("name", 10).should be_a Array(Mastodon::Entities::Account)
     end
   end
 end

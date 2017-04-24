@@ -46,14 +46,14 @@ end
 
 describe Mastodon::REST::Client do
   describe ".status(id)" do
-    it "Response should be a Mastodon::Response::Status" do
-      status(1).should be_a Mastodon::Response::Status
+    it "Response should be a Mastodon::Entities::Status" do
+      status(1).should be_a Mastodon::Entities::Status
     end
   end
 
   describe ".create_status(status, in_reply_to_id, media_ids, sensitive, spoiler_text, visibility)" do
-    it "Response should be a Mastodon::Response::Status" do
-      create_status("Hello world").should be_a Mastodon::Response::Status
+    it "Response should be a Mastodon::Entities::Status" do
+      create_status("Hello world").should be_a Mastodon::Entities::Status
     end
   end
 
@@ -64,50 +64,50 @@ describe Mastodon::REST::Client do
   end
 
   describe ".card(id)" do
-    it "Response should be a Mastodon::Response::Card" do
-      card(1).should be_a Mastodon::Response::Card
+    it "Response should be a Mastodon::Entities::Card" do
+      card(1).should be_a Mastodon::Entities::Card
     end
   end
 
   describe ".context(id)" do
-    it "Response should be a Mastodon::Response::Context" do
-      context(1).should be_a Mastodon::Response::Context
+    it "Response should be a Mastodon::Entities::Context" do
+      context(1).should be_a Mastodon::Entities::Context
     end
   end
 
   describe ".reblogged_by(id)" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      reblogged_by(1).should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      reblogged_by(1).should be_a Array(Mastodon::Entities::Account)
     end
   end
 
   describe ".favourited_by(id)" do
-    it "Response should be a Array(Mastodon::Response::Account)" do
-      favourited_by(1).should be_a Array(Mastodon::Response::Account)
+    it "Response should be a Array(Mastodon::Entities::Account)" do
+      favourited_by(1).should be_a Array(Mastodon::Entities::Account)
     end
   end
 
   describe ".reblog(id)" do
-    it "Response should be a Mastodon::Response::Status" do
-      reblog(1).should be_a Mastodon::Response::Status
+    it "Response should be a Mastodon::Entities::Status" do
+      reblog(1).should be_a Mastodon::Entities::Status
     end
   end
 
   describe ".unreblog(id)" do
-    it "Response should be a Mastodon::Response::Status" do
-      unreblog(1).should be_a Mastodon::Response::Status
+    it "Response should be a Mastodon::Entities::Status" do
+      unreblog(1).should be_a Mastodon::Entities::Status
     end
   end
 
   describe ".favourite(id)" do
-    it "Response should be a Mastodon::Response::Status" do
-      favourite(1).should be_a Mastodon::Response::Status
+    it "Response should be a Mastodon::Entities::Status" do
+      favourite(1).should be_a Mastodon::Entities::Status
     end
   end
 
   describe ".unfavourite(id)" do
-    it "Response should be a Mastodon::Response::Status" do
-      unfavourite(1).should be_a Mastodon::Response::Status
+    it "Response should be a Mastodon::Entities::Status" do
+      unfavourite(1).should be_a Mastodon::Entities::Status
     end
   end
 end

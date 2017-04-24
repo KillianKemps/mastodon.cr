@@ -6,7 +6,7 @@ require "./tag"
 require "./status"
 
 module Mastodon
-  module Response
+  module Entities
     class Status
 
       JSON.mapping({
@@ -17,17 +17,17 @@ module Mastodon
         sensitive: { type: Bool, nilable: true },
         spoiler_text: String,
         visibility: String,
-        application: { type: Response::Application, nilable: true },
-        account: Response::Account,
-        media_attachments: { type: Array(Response::Attachment), nilable: true },
-        mentions: { type: Array(Response::Mention), nilable: true },
-        tags: { type: Array(Response::Tag), nilable: true },
+        application: { type: Entities::Application, nilable: true },
+        account: Entities::Account,
+        media_attachments: { type: Array(Entities::Attachment), nilable: true },
+        mentions: { type: Array(Entities::Mention), nilable: true },
+        tags: { type: Array(Entities::Tag), nilable: true },
         uri: String,
         content: String,
         url: String,
         reblogs_count: Int32,
         favourites_count: Int32,
-        reblog: { type: Response::Status, nilable: true },
+        reblog: { type: Entities::Status, nilable: true },
         #favourited:,
         #reblogged:,
       })

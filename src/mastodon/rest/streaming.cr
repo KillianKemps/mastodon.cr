@@ -29,9 +29,9 @@ module Mastodon
         proccess_streaming(path) do |event, data|
           case event
             when "update"
-              yield Response::Status.from_json(data), nil
+              yield Entities::Status.from_json(data), nil
             when "notification"
-              yield nil, Response::Notification.from_json(data)
+              yield nil, Entities::Notification.from_json(data)
             when "delete"
               # TODO
               next

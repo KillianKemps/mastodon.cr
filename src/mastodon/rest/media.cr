@@ -14,7 +14,7 @@ module Mastodon
           }
           response = @http_client.post("/api/v1/media", headers, form_data.io.to_slice)
           body = proccess_response(response)
-          Response::Attachment.from_json(body)
+          Entities::Attachment.from_json(body)
         end
       end
     end

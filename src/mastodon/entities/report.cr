@@ -1,14 +1,12 @@
 require "json"
 
 module Mastodon
-  module Response
-    class App
+  module Entities
+    class Report
 
       JSON.mapping({
         id: Int32,
-        redirect_uri: String,
-        client_id: String,
-        client_secret: String,
+        action_taken: Bool
       })
 
       def_equals id
