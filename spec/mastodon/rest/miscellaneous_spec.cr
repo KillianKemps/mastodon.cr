@@ -1,123 +1,113 @@
 require "../../spec_helper"
 
-def favourites
-  stub_get("/api/v1/favourites", "statuses")
-  client.favourites
-end
-
-def blocks
-  stub_get("/api/v1/blocks", "accounts")
-  client.blocks
-end
-
-def follow_requests
-  stub_get("/api/v1/follow_requests", "accounts")
-  client.follow_requests
-end
-
-def authorize_follow_request(id)
-  stub_post_no_return("/api/v1/follow_requests/#{id}/authorize")
-  client.authorize_follow_request(id)
-end
-
-def reject_follow_request(id)
-  stub_post_no_return("/api/v1/follow_requests/#{id}/reject")
-  client.reject_follow_request(id)
-end
-
-def follows(username)
-  forms = HTTP::Params.build do |form|
-    form.add "uri", username
-  end
-  stub_post("/api/v1/follows", "account", forms)
-  client.follows(username)
-end
-
-def instance
-  stub_get("/api/v1/instance", "instance")
-  client.instance
-end
-
-def mutes
-  stub_get("/api/v1/mutes", "accounts")
-  client.mutes
-end
-
-def reports
-  stub_get("/api/v1/reports", "reports")
-  client.reports
-end
-
-def report
-  forms = HTTP::Params.build do |form|
-    form.add "account_id", "1"
-    form.add "status_ids[]", "1"
-    form.add "status_ids[]", "2"
-    form.add "status_ids[]", "3"
-    form.add "comment", ""
-  end
-  stub_post("/api/v1/reports", "report", forms)
-  client.report(1, [1, 2, 3])
-end
-
-describe Mastodon::REST::Client do
+describe Mastodon::REST::Miscellaneous do
   describe ".blocks" do
+    before do
+      stub_get("/api/v1/blocks", "accounts")
+    end
+    subject { client.blocks }
     it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
-      blocks.should be_a Mastodon::Collection(Mastodon::Entities::Account)
+      expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
   describe ".favourites" do
+    before do
+      stub_get("/api/v1/favourites", "statuses")
+    end
+    subject { client.favourites }
     it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
-      favourites.should be_a Mastodon::Collection(Mastodon::Entities::Status)
+      expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end
 
   describe ".follow_requests" do
+    before do
+      stub_get("/api/v1/follow_requests", "accounts")
+    end
+    subject { client.follow_requests }
     it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
-      follow_requests.should be_a Mastodon::Collection(Mastodon::Entities::Account)
+      expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
   describe ".authorize_follow_request" do
+    before do
+      stub_post_no_return("/api/v1/follow_requests/1/authorize")
+    end
+    subject { client.authorize_follow_request(1) }
     it "Response should be no return" do
-      authorize_follow_request(1).should be_nil
+      expect(subject).to be_nil
     end
   end
 
   describe ".reject_follow_request" do
+    before do
+      stub_post_no_return("/api/v1/follow_requests/1/reject")
+    end
+    subject { client.reject_follow_request(1) }
     it "Response should be no return" do
-      reject_follow_request(1).should be_nil
+      expect(subject).to be_nil
     end
   end
 
   describe ".follows(username)" do
+    before do
+      forms = HTTP::Params.build do |form|
+        form.add "uri", "user@domain"
+      end
+      stub_post("/api/v1/follows", "account", forms)
+    end
+    subject { client.follows("user@domain") }
     it "Response should be a Mastodon::Entities::Account" do
-      follows("user@domain").should be_a Mastodon::Entities::Account
+      expect(subject).to be_a Mastodon::Entities::Account
     end
   end
 
   describe ".instance" do
+    before do
+      stub_get("/api/v1/instance", "instance")
+    end
+    subject { client.instance }
     it "Response should be a Mastodon::Entities::Instance" do
-      instance.should be_a Mastodon::Entities::Instance
+      expect(subject).to be_a Mastodon::Entities::Instance
     end
   end
 
   describe ".mutes" do
+    before do
+      stub_get("/api/v1/mutes", "accounts")
+    end
+    subject { client.mutes }
     it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
-      mutes.should be_a Mastodon::Collection(Mastodon::Entities::Account)
+      expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
 
   describe ".reports" do
+    before do
+      stub_get("/api/v1/reports", "reports")
+    end
+    subject { client.reports }
     it "Response should be a Mastodon::Collection(Mastodon::Entities::Report)" do
-      reports.should be_a Mastodon::Collection(Mastodon::Entities::Report)
+      expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Report)
     end
   end
 
   describe ".report(account_id, status_ids, comment)" do
+    before do
+      forms = HTTP::Params.build do |form|
+        form.add "account_id", "1"
+        form.add "status_ids[]", "1"
+        form.add "status_ids[]", "2"
+        form.add "status_ids[]", "3"
+        form.add "comment", ""
+      end
+      stub_post("/api/v1/reports", "report", forms)
+    end
+    subject { client.report(1, [1, 2, 3], "") }
     it "Response should be a Mastodon::Entities::Report" do
-      report.should be_a Mastodon::Entities::Report
+      expect(subject).to be_a Mastodon::Entities::Report
     end
   end
 end

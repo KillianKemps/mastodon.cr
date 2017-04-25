@@ -1,6 +1,9 @@
-require "spec"
+require "spec2"
 require "webmock"
 require "../src/mastodon"
+
+include Spec2::GlobalDSL
+Spec2.doc
 
 def fixture_image(name)
   File.dirname(__FILE__) + "/fixtures/#{name}"
@@ -11,7 +14,7 @@ def load_fixture(name)
 end
 
 def client
-  Mastodon::REST::Client.new("mastodon.example.com", "token")
+  Mastodon::REST::Client.new("example.com", "token")
 end
 
 # GET

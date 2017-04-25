@@ -1,35 +1,33 @@
 require "../../spec_helper"
 
-describe Mastodon::Entities do
-  describe "Account" do
-    account_json = load_fixture("account")
-    accounts_json = load_fixture("accounts")
+describe Mastodon::Entities::Account do
+  describe "initialize from JSON" do
+    subject { Mastodon::Entities::Account.from_json(load_fixture("account")) }
+    let(other_account) { Mastodon::Entities::Account.from_json(load_fixture("account")) }
 
-    it "initialize from JSON" do
-      account = Mastodon::Entities::Account.from_json(account_json)
-      account.should be_a Mastodon::Entities::Account
-    end
-
-    it "initialize from JSON array" do
-      accounts = Mastodon::Collection(Mastodon::Entities::Account).from_json(accounts_json)
-      accounts.should be_a Mastodon::Collection(Mastodon::Entities::Account)
+    it "should be a Mastodon::Entities::Account" do
+      expect(subject).to be_a Mastodon::Entities::Account
     end
 
     it ".created_at should be a Time" do
-      account = Mastodon::Entities::Account.from_json(account_json)
-      account.created_at.should be_a Time
+      expect(subject.created_at).to be_a Time
     end
 
     it "equals by id" do
-      account = Mastodon::Entities::Account.from_json(account_json)
-      other_account = Mastodon::Entities::Account.from_json(account_json)
-      account.should eq other_account
+      expect(subject).to eq other_account
+    end
+  end
+
+  describe "initialize from JSON array" do
+    subject {  Mastodon::Collection(Mastodon::Entities::Account).from_json(load_fixture("accounts")) }
+
+    it "should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+      expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
 
     it ".next_id and .prev_id" do
-      accounts = Mastodon::Collection(Mastodon::Entities::Account).from_json(accounts_json)
-      accounts.next_id.should eq 1
-      accounts.prev_id.should eq 3
+      expect(subject.next_id).to eq 1
+      expect(subject.prev_id).to eq 3
     end
   end
 end

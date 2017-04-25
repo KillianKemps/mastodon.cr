@@ -1,23 +1,21 @@
 require "../../spec_helper"
 
-def multipart_form_data
-  filename = fixture_image("icon.png")
-  file = File.open(filename, "rb")
-  Mastodon::Utils::MultipartFormData.new("file", File.basename(filename), file)
-end
-
 describe Mastodon::Utils::MultipartFormData do
-  form_data = multipart_form_data
+  subject {
+    filename = fixture_image("icon.png")
+    file = File.open(filename, "rb")
+    Mastodon::Utils::MultipartFormData.new("file", File.basename(filename), file)
+  }
 
   describe ".content_type" do
     it "should match multipart/form-data; boundary=..." do
-      form_data.content_type.should match /^multipart\/form-data; boundary=/
+      expect(subject.content_type).to match /^multipart\/form-data; boundary=/
     end
   end
 
   describe ".size" do
     it "should equal IO size" do
-      form_data.size.should eq form_data.io.size
+      expect(subject.size).to eq subject.io.size
     end
   end
 end
