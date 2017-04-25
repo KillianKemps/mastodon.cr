@@ -30,6 +30,7 @@ module Mastodon
 
       def delete_status(id)
         delete("#{STATUSES_BASE}/#{id}")
+        nil
       end
 
       def card(id)

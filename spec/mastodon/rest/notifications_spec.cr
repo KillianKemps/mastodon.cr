@@ -41,13 +41,13 @@ describe Mastodon::REST::Client do
 
   describe ".delete_notification(id)" do
     it "Response should be no return" do
-      delete_notification(1).should eq "{}"
+      delete_notification(1).should be_nil
     end
   end
 
   describe ".clear_notifications" do
     it "Response should be no return" do
-      clear_notifications.should eq "{}"
+      clear_notifications.should be_nil
     end
   end
 end

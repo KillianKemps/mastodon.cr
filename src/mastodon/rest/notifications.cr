@@ -23,10 +23,12 @@ module Mastodon
 
       def delete_notification(id)
         post("#{NOTIFICATIONS_BASE}/dismiss/#{id}")
+        nil
       end
 
       def clear_notifications
         post("#{NOTIFICATIONS_BASE}/clear")
+        nil
       end
 
     end

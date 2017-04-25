@@ -36,10 +36,12 @@ module Mastodon
 
       def authorize_follow_request(id)
         post("/api/v1/follow_requests/#{id}/authorize")
+        nil
       end
 
       def reject_follow_request(id)
         post("/api/v1/follow_requests/#{id}/reject")
+        nil
       end
 
       def follows(username)

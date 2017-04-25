@@ -74,7 +74,7 @@ describe Mastodon::REST::Client do
 
   describe ".delete_status(id)" do
     it "Response should be no return" do
-      delete_status(1).should eq "{}"
+      delete_status(1).should be_nil
     end
   end
 

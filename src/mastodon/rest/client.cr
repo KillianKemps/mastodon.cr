@@ -25,37 +25,36 @@ module Mastodon
         authenticate(access_token)
       end
 
-      def get(path : String, params : String | Hash(String, String) = "") : String
+      def get(path : String, params : String | Hash(String, String) = "")
         params = HTTP::Params.from_hash(params) if params.is_a?(Hash)
         path += "?#{params}" unless params.empty?
         response = @http_client.get(path)
         proccess_response(response)
       end
 
-      def post(path : String, form : String | Hash(String, String) = "") : String
+      def post(path : String, form : String | Hash(String, String) = "")
         response = @http_client.post_form(path, form)
         proccess_response(response)
       end
 
-      def patch(path : String, form : String | Hash(String, String) = "") : String
+      def patch(path : String, form : String | Hash(String, String) = "")
         form = HTTP::Params.from_hash(form) if form.is_a?(Hash)
         response = @http_client.patch(path, HTTP::Headers{"Content-type" => "application/x-www-form-urlencoded"}, form)
         proccess_response(response)
       end
 
-      def delete(path : String) : String
+      def delete(path : String)
         response = @http_client.delete(path)
         proccess_response(response)
       end
 
-      private def proccess_response(response : HTTP::Client::Response) : String
+      private def proccess_response(response : HTTP::Client::Response)
         case response.status_code
           when 200..299
             return response.body
           else
             raise REST::Error.new(response)
         end
-        return "{}"
       end
     end
   end
