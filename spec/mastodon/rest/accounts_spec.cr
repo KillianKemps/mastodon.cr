@@ -64,9 +64,14 @@ def {{ method.id }}(id)
 end
 {% end %}
 
-def relationships(id)
-  stub_get("/api/v1/accounts/relationships?id[]=#{id}", "relationships")
-  client.relationships(id)
+def relationships(ids)
+  params = HTTP::Params.build do |param|
+    param.add "id[]", "#{ids}" if ids.is_a?(Int32)
+    ids.map { |id| param.add "id[]", "#{id}" } if ids.is_a?(Array(Int32))
+  end
+  query = "?#{params}" unless params.empty?
+  stub_get("/api/v1/accounts/relationships#{query}", "relationships")
+  client.relationships(ids)
 end
 
 def search_accounts(name, limit = 40)
