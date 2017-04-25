@@ -11,7 +11,7 @@ module Mastodon
           "scopes" => scopes,
           "website" => website
         })
-        App.from_json(response)
+        Entities::Auth::App.from_json(response)
       end
     end
   end

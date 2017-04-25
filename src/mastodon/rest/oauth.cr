@@ -7,7 +7,7 @@ module Mastodon
       end
 
       def get_access_token_using_username_password(client_id = "", client_secret = "", scopes = "read", username = "", password = "") : OAuth2::AccessToken::Bearer
-        response_body = post("/oauth/token", {
+        response = post("/oauth/token", {
           "client_id" => client_id,
           "client_secret" => client_secret,
           "scope" => scopes,
@@ -15,8 +15,8 @@ module Mastodon
           "username" => username,
           "password" => password
         })
-        json = JSON.parse(response_body)
-        OAuth2::AccessToken::Bearer.new(json["access_token"].to_s, 172_800)
+        token = Entities::Auth::AccessToken.from_json(response)
+        OAuth2::AccessToken::Bearer.new(token.access_token, 172_800)
       end
     end
   end
