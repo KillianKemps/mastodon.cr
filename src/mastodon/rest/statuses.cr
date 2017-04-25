@@ -15,11 +15,7 @@ module Mastodon
         forms = HTTP::Params.build do |form|
           form.add "status", "#{status}"
           form.add "in_reply_to_id", "#{in_reply_to_id}" unless in_reply_to_id.nil?
-          unless media_ids.empty?
-            media_ids.each do |id|
-              form.add "media_ids[]", "#{id}"
-            end
-          end
+          media_ids.map { |id| form.add "media_ids[]", "#{id}" }
           form.add "sensitive", "true" if sensitive
           form.add "spoiler_text", "#{spoiler_text}" unless spoiler_text.empty?
           form.add "visibility", "#{visibility}" if ["direct", "private", "unlisted", "public"].includes?(visibility)

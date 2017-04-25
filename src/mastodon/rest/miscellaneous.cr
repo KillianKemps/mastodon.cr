@@ -72,14 +72,8 @@ module Mastodon
       def report(account_id, status_ids : Int32 | Array(Int32), comment = "")
         forms = HTTP::Params.build do |form|
           form.add "account_id", "#{account_id}"
-          case status_ids
-            when Int32
-              form.add "status_ids[]", "#{status_ids}"
-            when Array(Int32)
-              status_ids.each do |status_id|
-                form.add "status_ids[]", "#{status_id}"
-              end
-          end
+          form.add "status_ids[]", "#{status_ids}" if status_ids.is_a?(Int32)
+          status_ids.map { |id| form.add "status_ids[]", "#{id}" } if status_ids.is_a?(Array(Int32))
           form.add "comment", "#{comment}"
         end
         response = post("/api/v1/reports", forms)

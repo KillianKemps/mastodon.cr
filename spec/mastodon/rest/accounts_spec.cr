@@ -65,7 +65,7 @@ end
 {% end %}
 
 def relationships(id)
-  stub_get("/api/v1/accounts/relationships?id=#{id}", "relationships")
+  stub_get("/api/v1/accounts/relationships?id[]=#{id}", "relationships")
   client.relationships(id)
 end
 

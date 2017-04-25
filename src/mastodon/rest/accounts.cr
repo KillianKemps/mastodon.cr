@@ -69,14 +69,8 @@ module Mastodon
 
       def relationships(ids : Int32 | Array(Int32))
         params = HTTP::Params.build do |param|
-          case ids
-            when Int32
-              param.add "id", "#{ids}"
-            when Array(Int32)
-              ids.each do |id|
-                param.add "id[]", "#{id}"
-              end
-          end
+          param.add "id[]", "#{ids}" if ids.is_a?(Int32)
+          ids.map { |id| param.add "id[]", "#{id}" } if ids.is_a?(Array(Int32))
         end
         response = get("#{ACCOUNTS_BASE}/relationships", params)
         Collection(Entities::Relationship).from_json(response)
