@@ -23,23 +23,24 @@ require "mastodon"
 ### Regist application & Authenticate
 
 ```crystal
-client = Mastodon::REST::Client.new(url: "mastodon.cloud")
+client = Mastodon::REST::Client.new(url: "example.com")
 app =  client.apps("My Mastodon App", scopes: "read write follow")
 
 token = client.get_access_token_using_username_password(
   client_id: app.client_id,
   client_secret: app.client_secret,
   scopes: "read write follow",
-  username: "USER_NAME",
+  username: "USERNAME",
   password: "PASSWORD"
 )
+
 client.authenticate(token.access_token)
 ```
 
 ### Client
 
 ```crystal
-client = Mastodon::REST::Client.new(url: "mastodon.cloud", access_token: "ACCESS_TOKEN")
+client = Mastodon::REST::Client.new(url: "example.com", access_token: "ACCESS_TOKEN")
 ```
 
 ## Todo
