@@ -8,7 +8,7 @@ module Mastodon
 
       JSON.mapping({
         id: Int32,
-        type: String,
+        type: String, # "mention", "reblog", "favourite", "follow"
         created_at: { type: Time, converter: Time::Format.new("%Y-%m-%dT%T") },
         account: Entities::Account,
         status: { type: Entities::Status, nilable: true }

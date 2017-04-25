@@ -6,7 +6,7 @@ module Mastodon
 
       JSON.mapping({
         id: Int32,
-        type: String,
+        type: String, # "image", "video", "gifv"
         url: String,
         remote_url: { type: String, nilable: true },
         preview_url: { type: String, nilable: true },
