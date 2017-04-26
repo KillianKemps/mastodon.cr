@@ -11,11 +11,11 @@
       "following_count": 1,
       "statuses_count": 1,
       "note": "",
-      "url": "https://mastodon.example.com/@USER",
-      "avatar": "https://mastodon.example.com/avatars/original/missing.png",
-      "avatar_static": "https://mastodon.example.com/avatars/original/missing.png",
-      "header": "https://mastodon.example.com/headers/original/missing.png",
-      "header_static": "https://mastodon.example.com/headers/original/missing.png"
+      "url": "https://example.com/@USER",
+      "avatar": "https://example.com/avatars/original/missing.png",
+      "avatar_static": "https://example.com/avatars/original/missing.png",
+      "header": "https://example.com/headers/original/missing.png",
+      "header_static": "https://example.com/headers/original/missing.png"
     },
     "created_at": "2017-04-14T08:49:17",
     "id": 1,
@@ -33,11 +33,11 @@
       "following_count": 1,
       "statuses_count": 1,
       "note": "",
-      "url": "https://mastodon.example.com/@USER",
-      "avatar": "https://mastodon.example.com/avatars/original/missing.png",
-      "avatar_static": "https://mastodon.example.com/avatars/original/missing.png",
-      "header": "https://mastodon.example.com/headers/original/missing.png",
-      "header_static": "https://mastodon.example.com/headers/original/missing.png"
+      "url": "https://example.com/@USER",
+      "avatar": "https://example.com/avatars/original/missing.png",
+      "avatar_static": "https://example.com/avatars/original/missing.png",
+      "header": "https://example.com/headers/original/missing.png",
+      "header_static": "https://example.com/headers/original/missing.png"
     },
     "created_at": "2017-04-14T08:48:47",
     "id": 2,
@@ -53,11 +53,11 @@
         "following_count": 1,
         "statuses_count": 1,
         "note": "",
-        "url": "https://mastodon.example.com/@USER",
-        "avatar": "https://mastodon.example.com/avatars/original/missing.png",
-        "avatar_static": "https://mastodon.example.com/avatars/original/missing.png",
-        "header": "https://mastodon.example.com/headers/original/missing.png",
-        "header_static": "https://mastodon.example.com/headers/original/missing.png"
+        "url": "https://example.com/@USER",
+        "avatar": "https://example.com/avatars/original/missing.png",
+        "avatar_static": "https://example.com/avatars/original/missing.png",
+        "header": "https://example.com/headers/original/missing.png",
+        "header_static": "https://example.com/headers/original/missing.png"
       },
       "content": "<p>Hello world.</p>",
       "created_at": "2017-04-14T08:48:15",
@@ -69,8 +69,8 @@
       "sensitive": false,
       "spoiler_text": "",
       "tags": [],
-      "uri": "tag:mastodon.example.com,2017-04-14:objectId=14513:objectType=Status",
-      "url": "https://mastodon.example.com/@USER/14513",
+      "uri": "tag:example.com,2017-04-14:objectId=14513:objectType=Status",
+      "url": "https://example.com/@USER/14513",
       "visibility": "public"
     },
     "type": "reblog"
@@ -87,11 +87,11 @@
       "following_count": 1,
       "statuses_count": 1,
       "note": "",
-      "url": "https://mastodon.example.com/@USER",
-      "avatar": "https://mastodon.example.com/avatars/original/missing.png",
-      "avatar_static": "https://mastodon.example.com/avatars/original/missing.png",
-      "header": "https://mastodon.example.com/headers/original/missing.png",
-      "header_static": "https://mastodon.example.com/headers/original/missing.png"
+      "url": "https://example.com/@USER",
+      "avatar": "https://example.com/avatars/original/missing.png",
+      "avatar_static": "https://example.com/avatars/original/missing.png",
+      "header": "https://example.com/headers/original/missing.png",
+      "header_static": "https://example.com/headers/original/missing.png"
     },
     "created_at": "2017-04-14T08:48:38",
     "id": 3,
@@ -107,11 +107,11 @@
         "following_count": 1,
         "statuses_count": 1,
         "note": "",
-        "url": "https://mastodon.example.com/@USER",
-        "avatar": "https://mastodon.example.com/avatars/original/missing.png",
-        "avatar_static": "https://mastodon.example.com/avatars/original/missing.png",
-        "header": "https://mastodon.example.com/headers/original/missing.png",
-        "header_static": "https://mastodon.example.com/headers/original/missing.png"
+        "url": "https://example.com/@USER",
+        "avatar": "https://example.com/avatars/original/missing.png",
+        "avatar_static": "https://example.com/avatars/original/missing.png",
+        "header": "https://example.com/headers/original/missing.png",
+        "header_static": "https://example.com/headers/original/missing.png"
       },
       "content": "<p>Hello world.</p>",
       "created_at": "2017-04-14T08:48:15",
@@ -123,8 +123,8 @@
       "sensitive": false,
       "spoiler_text": "",
       "tags": [],
-      "uri": "tag:mastodon.example.com,2017-04-14:objectId=14513:objectType=Status",
-      "url": "https://mastodon.example.com/@USER/14513",
+      "uri": "tag:example.com,2017-04-14:objectId=14513:objectType=Status",
+      "url": "https://example.com/@USER/14513",
       "visibility": "public"
     },
     "type": "favourite"

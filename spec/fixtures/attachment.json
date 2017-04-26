@@ -1,7 +1,7 @@
 {
   "id": 1,
   "type": "image",
-  "url": "https://mastodon.example.com/system/media_attachments/files/000/000/000/original/IMAGE.png?XXXXX",
-  "preview_url": "https://mastodon.example.com/system/media_attachments/files/000/000/000/small/IMAGE.png?XXXXX",
-  "text_url": "https://mastodon.example.com/media/URL"
+  "url": "https://example.com/system/media_attachments/files/000/000/000/original/IMAGE.png?XXXXX",
+  "preview_url": "https://example.com/system/media_attachments/files/000/000/000/small/IMAGE.png?XXXXX",
+  "text_url": "https://example.com/media/URL"
 }
