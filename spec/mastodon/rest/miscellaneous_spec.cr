@@ -6,7 +6,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_get("/api/v1/blocks", "accounts")
     end
     subject { client.blocks }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
@@ -16,7 +16,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_get("/api/v1/favourites", "statuses")
     end
     subject { client.favourites }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Status)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end
@@ -26,7 +26,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_get("/api/v1/follow_requests", "accounts")
     end
     subject { client.follow_requests }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
@@ -36,7 +36,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_post_no_return("/api/v1/follow_requests/1/authorize")
     end
     subject { client.authorize_follow_request(1) }
-    it "Response should be no return" do
+    it "is no return" do
       expect(subject).to be_nil
     end
   end
@@ -46,7 +46,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_post_no_return("/api/v1/follow_requests/1/reject")
     end
     subject { client.reject_follow_request(1) }
-    it "Response should be no return" do
+    it "is no return" do
       expect(subject).to be_nil
     end
   end
@@ -59,7 +59,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_post("/api/v1/follows", "account", forms)
     end
     subject { client.follows("user@domain") }
-    it "Response should be a Mastodon::Entities::Account" do
+    it "is a Mastodon::Entities::Account" do
       expect(subject).to be_a Mastodon::Entities::Account
     end
   end
@@ -69,7 +69,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_get("/api/v1/instance", "instance")
     end
     subject { client.instance }
-    it "Response should be a Mastodon::Entities::Instance" do
+    it "is a Mastodon::Entities::Instance" do
       expect(subject).to be_a Mastodon::Entities::Instance
     end
   end
@@ -79,7 +79,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_get("/api/v1/mutes", "accounts")
     end
     subject { client.mutes }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
@@ -89,7 +89,7 @@ describe Mastodon::REST::Miscellaneous do
       stub_get("/api/v1/reports", "reports")
     end
     subject { client.reports }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Report)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Report)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Report)
     end
   end
@@ -106,8 +106,21 @@ describe Mastodon::REST::Miscellaneous do
       stub_post("/api/v1/reports", "report", forms)
     end
     subject { client.report(1, [1, 2, 3], "") }
-    it "Response should be a Mastodon::Entities::Report" do
+    it "is a Mastodon::Entities::Report" do
       expect(subject).to be_a Mastodon::Entities::Report
+    end
+  end
+
+  describe ".search(query, resolve)" do
+    before do
+      params = HTTP::Params.build do |param|
+        param.add "q", "QUERY"
+      end
+      stub_get("/api/v1/search", "results", params)
+    end
+    subject { client.search("QUERY") }
+    it "is a Mastodon::Entities::Results" do
+      expect(subject).to be_a Mastodon::Entities::Results
     end
   end
 end

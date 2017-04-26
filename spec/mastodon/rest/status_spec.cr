@@ -6,7 +6,7 @@ describe Mastodon::REST::Statuses do
       stub_get("/api/v1/statuses/1", "status")
     end
     subject { client.status(1) }
-    it "Response should be a Mastodon::Entities::Status" do
+    it "is a Mastodon::Entities::Status" do
       expect(subject).to be_a Mastodon::Entities::Status
     end
   end
@@ -19,7 +19,7 @@ describe Mastodon::REST::Statuses do
       stub_post("/api/v1/statuses", "status", forms)
     end
     subject { client.create_status("Hello world") }
-    it "Response should be a Mastodon::Entities::Status" do
+    it "is a Mastodon::Entities::Status" do
       expect(subject).to be_a Mastodon::Entities::Status
     end
   end
@@ -31,7 +31,7 @@ describe Mastodon::REST::Statuses do
         to_return(body: "{}")
     end
     subject { client.delete_status(1) }
-    it "Response should be no return" do
+    it "is no return" do
       expect(subject).to be_nil
     end
   end
@@ -41,7 +41,7 @@ describe Mastodon::REST::Statuses do
       stub_get("/api/v1/statuses/1/card", "card")
     end
     subject { client.card(1) }
-    it "Response should be a Mastodon::Entities::Card" do
+    it "is a Mastodon::Entities::Card" do
       expect(subject).to be_a Mastodon::Entities::Card
     end
   end
@@ -51,7 +51,7 @@ describe Mastodon::REST::Statuses do
       stub_get("/api/v1/statuses/1/context", "context")
     end
     subject { client.context(1) }
-    it "Response should be a Mastodon::Entities::Context" do
+    it "is a Mastodon::Entities::Context" do
       expect(subject).to be_a Mastodon::Entities::Context
     end
   end
@@ -62,7 +62,7 @@ describe Mastodon::REST::Statuses do
       stub_get("/api/v1/statuses/1/{{ method.id }}", "accounts")
     end
     subject { client.{{ method.id }}(1) }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
@@ -75,7 +75,7 @@ describe Mastodon::REST::Statuses do
       stub_post("/api/v1/statuses/1/{{ method.id }}", "status")
     end
     subject { client.{{ method.id }}(1) }
-    it "Response should be a Mastodon::Entities::Status" do
+    it "is a Mastodon::Entities::Status" do
       expect(subject).to be_a Mastodon::Entities::Status
     end
   end

@@ -12,7 +12,7 @@ describe Mastodon::REST::Apps do
       stub_post("/api/v1/apps", "apps", forms)
     end
     subject { client.apps("CLIENT_NAME", redirect_uris: "urn:ietf:wg:oauth:2.0:oob", scopes: "read write follow", website: "") }
-    it "Response should be a Mastodon::Entities::Auth::App" do
+    it "is a Mastodon::Entities::Auth::App" do
       expect(subject).to be_a Mastodon::Entities::Auth::App
     end
   end

@@ -5,11 +5,11 @@ describe Mastodon::Entities::Account do
     subject { Mastodon::Entities::Account.from_json(load_fixture("account")) }
     let(other_account) { Mastodon::Entities::Account.from_json(load_fixture("account")) }
 
-    it "should be a Mastodon::Entities::Account" do
+    it "is a Mastodon::Entities::Account" do
       expect(subject).to be_a Mastodon::Entities::Account
     end
 
-    it ".created_at should be a Time" do
+    it ".created_at is a Time" do
       expect(subject.created_at).to be_a Time
     end
 
@@ -21,7 +21,7 @@ describe Mastodon::Entities::Account do
   describe "initialize from JSON array" do
     subject {  Mastodon::Collection(Mastodon::Entities::Account).from_json(load_fixture("accounts")) }
 
-    it "should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
 

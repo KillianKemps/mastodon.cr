@@ -5,15 +5,15 @@ describe Mastodon::Entities::Status do
     subject { Mastodon::Entities::Status.from_json(load_fixture("status")) }
     let(other_status) { Mastodon::Entities::Status.from_json(load_fixture("status")) }
 
-    it "should be a Mastodon::Entities::Status" do
+    it "is a Mastodon::Entities::Status" do
       expect(subject).to be_a Mastodon::Entities::Status
     end
 
-    it ".created_at should be a Time" do
+    it ".created_at is a Time" do
       expect(subject.created_at).to be_a Time
     end
 
-    it ".account should be a Mastodon::Entities::Account" do
+    it ".account is a Mastodon::Entities::Account" do
       expect(subject.account).to be_a Mastodon::Entities::Account
     end
 
@@ -25,7 +25,7 @@ describe Mastodon::Entities::Status do
   describe "initialize from JSON array" do
     subject { Mastodon::Collection(Mastodon::Entities::Status).from_json(load_fixture("statuses")) }
 
-    it "should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Status)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
 

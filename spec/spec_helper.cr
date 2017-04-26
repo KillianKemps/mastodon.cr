@@ -18,8 +18,9 @@ def client
 end
 
 # GET
-def stub_get(path, fixture)
-  WebMock.stub(:get, "https://#{client.url}#{path}").
+def stub_get(path, fixture, query = "")
+  query = "?#{query}" unless query.empty?
+  WebMock.stub(:get, "https://#{client.url}#{path}#{query}").
     with(headers: {"Authorization" => "Bearer token"}).
     to_return(body: load_fixture(fixture))
 end

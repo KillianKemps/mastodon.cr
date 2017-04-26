@@ -6,7 +6,7 @@ describe Mastodon::REST::Timelines do
       stub_get("/api/v1/timelines/home", "statuses")
     end
     subject { client.timeline_home }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Status)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end
@@ -16,7 +16,7 @@ describe Mastodon::REST::Timelines do
       stub_get("/api/v1/timelines/public", "statuses")
     end
     subject { client.timeline_public }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Status)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end
@@ -26,7 +26,7 @@ describe Mastodon::REST::Timelines do
       stub_get("/api/v1/timelines/tag/hashtag", "statuses")
     end
     subject { client.timeline_tag("hashtag") }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Status)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end

@@ -6,7 +6,7 @@ describe Mastodon::REST::Accounts do
       stub_get("/api/v1/accounts/1", "account")
     end
     subject { client.account(1) }
-    it "Response should be a Mastodon::Entities::Account" do
+    it "is a Mastodon::Entities::Account" do
       expect(subject).to be_a Mastodon::Entities::Account
     end
   end
@@ -16,7 +16,7 @@ describe Mastodon::REST::Accounts do
       stub_get("/api/v1/accounts/verify_credentials", "account")
     end
     subject { client.verify_credentials }
-    it "Response should be a Mastodon::Entities::Account" do
+    it "is a Mastodon::Entities::Account" do
       expect(subject).to be_a Mastodon::Entities::Account
     end
   end
@@ -31,12 +31,16 @@ describe Mastodon::REST::Accounts do
         to_return(body: load_fixture("account"))
     end
     subject { client.update_credentials("DISPLAY_NAME") }
-    it "Response should be a Mastodon::Entities::Account" do
+    it "is a Mastodon::Entities::Account" do
       expect(subject).to be_a Mastodon::Entities::Account
     end
-    #it "Expect raise ArgumentError" do
-    #  expect(update_credentials).to raise_error(ArgumentError)
-    #end
+
+    describe "with invalid parametors" do
+      subject { client.update_credentials() }
+      it "raise ArgumentError" do
+        expect { subject }.to raise_error(ArgumentError)
+      end
+    end
   end
 
   describe ".followers(id, max_id, since_id, limit)" do
@@ -44,7 +48,7 @@ describe Mastodon::REST::Accounts do
       stub_get("/api/v1/accounts/1/followers", "accounts")
     end
     subject { client.followers(1) }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
@@ -54,7 +58,7 @@ describe Mastodon::REST::Accounts do
       stub_get("/api/v1/accounts/1/following", "accounts")
     end
     subject { client.following(1) }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
@@ -64,7 +68,7 @@ describe Mastodon::REST::Accounts do
       stub_get("/api/v1/accounts/1/statuses", "statuses")
     end
     subject { client.statuses(1) }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Status)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Status)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
   end
@@ -75,7 +79,7 @@ describe Mastodon::REST::Accounts do
       stub_post("/api/v1/accounts/1/{{ method.id }}", "relationship")
     end
     subject { client.{{ method.id }}(1) }
-    it "Response should be a Mastodon::Entities::Relationship" do
+    it "is a Mastodon::Entities::Relationship" do
       expect(subject).to be_a Mastodon::Entities::Relationship
     end
   end
@@ -86,11 +90,10 @@ describe Mastodon::REST::Accounts do
       params = HTTP::Params.build do |param|
         param.add "id[]", "1"
       end
-      query = "?#{params}" unless params.empty?
-      stub_get("/api/v1/accounts/relationships#{query}", "relationships")
+      stub_get("/api/v1/accounts/relationships", "relationships", params)
     end
     subject { client.relationships(1) }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Relationship)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Relationship)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Relationship)
     end
   end
@@ -101,11 +104,10 @@ describe Mastodon::REST::Accounts do
         param.add "q", "name"
         param.add "limit", "10"
       end
-      query = "?#{params}" unless params.empty?
-      stub_get("/api/v1/accounts/search#{query}", "accounts")
+      stub_get("/api/v1/accounts/search", "accounts", params)
     end
     subject { client.search_accounts("name", 10) }
-    it "Response should be a Mastodon::Collection(Mastodon::Entities::Account)" do
+    it "is a Mastodon::Collection(Mastodon::Entities::Account)" do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Account)
     end
   end
