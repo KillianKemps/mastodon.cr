@@ -79,6 +79,15 @@ module Mastodon
         response = post("/api/v1/reports", forms)
         Entities::Report.from_json(response)
       end
+
+      def search(query, resolve = false)
+        params = HTTP::Params.build do |param|
+          param.add "q", "#{query}"
+          param.add "resolve", "true" if resolve
+        end
+        response = get("/api/v1/search", params)
+        Entities::Results.from_json(response)
+      end
     end
   end
 end
