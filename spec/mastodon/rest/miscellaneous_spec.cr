@@ -114,15 +114,43 @@ describe Mastodon::REST::Miscellaneous do
   end
 
   describe ".search(query, resolve)" do
-    before do
-      params = HTTP::Params.build do |param|
-        param.add "q", "QUERY"
+    describe "with keyword" do
+      before do
+        params = HTTP::Params.build do |param|
+          param.add "q", "QUERY"
+        end
+        stub_get("/api/v1/search", "results", params)
       end
-      stub_get("/api/v1/search", "results", params)
+      subject { client.search("QUERY") }
+      it "is a Mastodon::Entities::Results" do
+        expect(subject).to be_a Mastodon::Entities::Results
+      end
     end
-    subject { client.search("QUERY") }
-    it "is a Mastodon::Entities::Results" do
-      expect(subject).to be_a Mastodon::Entities::Results
+
+    describe "with account URL" do
+      before do
+        params = HTTP::Params.build do |param|
+          param.add "q", "https://example.com/@USER"
+        end
+        stub_get("/api/v1/search", "results_account", params)
+      end
+      subject { client.search("https://example.com/@USER") }
+      it "is a Mastodon::Entities::Results" do
+        expect(subject).to be_a Mastodon::Entities::Results
+      end
+    end
+
+    describe "with status URL" do
+      before do
+        params = HTTP::Params.build do |param|
+          param.add "q", "https://example.com/@USER/1"
+        end
+        stub_get("/api/v1/search", "results_status", params)
+      end
+      subject { client.search("https://example.com/@USER/1") }
+      it "is a Mastodon::Entities::Results" do
+        expect(subject).to be_a Mastodon::Entities::Results
+      end
     end
   end
 end
