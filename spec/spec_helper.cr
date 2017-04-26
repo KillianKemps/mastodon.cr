@@ -21,19 +21,27 @@ end
 def stub_get(path, fixture, query = "")
   query = "?#{query}" unless query.empty?
   WebMock.stub(:get, "https://#{client.url}#{path}#{query}").
-    with(headers: {"Authorization" => "Bearer token"}).
+    with(headers: {"Authorization" => "Bearer token", "User-Agent" => "#{client.user_agent}"}).
     to_return(body: load_fixture(fixture))
 end
 
 # POST
 def stub_post(path, fixture, body = "")
   WebMock.stub(:post, "https://#{client.url}#{path}").
-    with(body: body, headers: {"Content-type" => "application/x-www-form-urlencoded", "Authorization" => "Bearer token"}).
+    with(body: body, headers: {
+      "Content-type" => "application/x-www-form-urlencoded",
+      "Authorization" => "Bearer token",
+      "User-Agent" => "#{client.user_agent}"
+    }).
     to_return(body: load_fixture(fixture))
 end
 
 def stub_post_no_return(path, body = "")
   WebMock.stub(:post, "https://#{client.url}#{path}").
-    with(body: body, headers: {"Content-type" => "application/x-www-form-urlencoded", "Authorization" => "Bearer token"}).
+    with(body: body, headers: {
+      "Content-type" => "application/x-www-form-urlencoded",
+      "Authorization" => "Bearer token",
+      "User-Agent" => "#{client.user_agent}"
+    }).
     to_return(body: "{}")
 end

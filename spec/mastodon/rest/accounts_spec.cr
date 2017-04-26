@@ -27,7 +27,7 @@ describe Mastodon::REST::Accounts do
         form.add "display_name", "DISPLAY_NAME"
       end
       WebMock.stub(:patch, "https://#{client.url}/api/v1/accounts/update_credentials").
-        with(body: forms, headers: {"Authorization" => "Bearer token"}).
+        with(body: forms, headers: {"Authorization" => "Bearer token", "User-Agent" => "mastodon.cr/0.1.0"}).
         to_return(body: load_fixture("account"))
     end
     subject { client.update_credentials("DISPLAY_NAME") }

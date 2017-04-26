@@ -10,7 +10,8 @@ module Mastodon
           form_data = Utils::MultipartFormData.new("file", File.basename(filename), file)
           headers = HTTP::Headers{
             "Content-Length" => "#{form_data.size}",
-            "Content-Type" => "#{form_data.content_type}"
+            "Content-Type" => "#{form_data.content_type}",
+            "User-Agent" => "#{@user_agent}"
           }
           response = @http_client.post("/api/v1/media", headers, form_data.io.to_slice)
           body = proccess_response(response)

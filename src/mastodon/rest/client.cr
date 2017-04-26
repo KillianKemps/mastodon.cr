@@ -11,8 +11,9 @@ module Mastodon
       include Mastodon::REST::Api
       include Mastodon::REST::OAuth
 
-      getter  url : String
-      getter! access_token : OAuth2::AccessToken::Bearer?
+      getter   url : String
+      getter!  access_token : OAuth2::AccessToken::Bearer?
+      property user_agent : String = "mastodon.cr/#{Mastodon::VERSION}"
 
       def initialize(url : String)
         @url = url
@@ -28,24 +29,29 @@ module Mastodon
       def get(path : String, params : String | Hash(String, String) = "")
         params = HTTP::Params.from_hash(params) if params.is_a?(Hash)
         path += "?#{params}" unless params.empty?
-        response = @http_client.get(path)
+        response = @http_client.get(path, defuault_headers)
         proccess_response(response)
       end
 
       def post(path : String, form : String | Hash(String, String) = "")
-        response = @http_client.post_form(path, form)
+        response = @http_client.post_form(path, form, defuault_headers)
         proccess_response(response)
       end
 
       def patch(path : String, form : String | Hash(String, String) = "")
         form = HTTP::Params.from_hash(form) if form.is_a?(Hash)
-        response = @http_client.patch(path, HTTP::Headers{"Content-type" => "application/x-www-form-urlencoded"}, form)
+        headers = HTTP::Headers{"Content-type" => "application/x-www-form-urlencoded"}
+        response = @http_client.patch(path, headers.merge!(defuault_headers), form)
         proccess_response(response)
       end
 
       def delete(path : String)
-        response = @http_client.delete(path)
+        response = @http_client.delete(path, defuault_headers)
         proccess_response(response)
+      end
+
+      private def defuault_headers
+        HTTP::Headers{"User-Agent" => "#{@user_agent}"}
       end
 
       private def proccess_response(response : HTTP::Client::Response)
