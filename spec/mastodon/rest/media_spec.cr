@@ -1,6 +1,8 @@
 require "../../spec_helper"
 
 describe Mastodon::REST::Media do
+  let(client) { Mastodon::REST::Client.new("example.com", "token") }
+
   describe ".media_upload(filename)" do
     before do
       WebMock.stub(:post, "https://#{client.url}/api/v1/media").

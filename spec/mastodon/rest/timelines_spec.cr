@@ -1,6 +1,8 @@
 require "../../spec_helper"
 
 describe Mastodon::REST::Timelines do
+  let(client) { Mastodon::REST::Client.new("example.com", "token") }
+
   describe ".timeline_home(max_id, since_id, limit)" do
     before do
       stub_get("/api/v1/timelines/home", "statuses")

@@ -1,6 +1,8 @@
 require "../../spec_helper"
 
 describe Mastodon::REST::Accounts do
+  let(client) { Mastodon::REST::Client.new("example.com", "token") }
+
   describe ".account(id)" do
     before do
       stub_get("/api/v1/accounts/1", "account")

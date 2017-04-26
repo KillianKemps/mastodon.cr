@@ -29,8 +29,11 @@ describe Mastodon::Entities::Status do
       expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
     end
 
-    it ".next_id and .prev_id" do
+    it ".next_id is equal minimum of ids" do
       expect(subject.next_id).to eq 1
+    end
+
+    it ".prev_id is equal maximum of ids" do
       expect(subject.prev_id).to eq 3
     end
   end

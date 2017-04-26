@@ -1,6 +1,8 @@
 require "../../spec_helper"
 
 describe Mastodon::REST::Notifications do
+  let(client) { Mastodon::REST::Client.new("example.com", "token") }
+
   describe ".notifications(max_id, since_id, limit)" do
     before do
       stub_get("/api/v1/notifications", "notifications")
@@ -23,7 +25,7 @@ describe Mastodon::REST::Notifications do
 
   describe ".delete_notification(id)" do
     before do
-      stub_post_no_return("/api/v1/notifications/dismiss/1")
+      stub_post("/api/v1/notifications/dismiss/1")
     end
     subject { client.delete_notification(1) }
     it "is no return" do
@@ -33,7 +35,7 @@ describe Mastodon::REST::Notifications do
 
   describe ".clear_notifications" do
     before do
-      stub_post_no_return("/api/v1/notifications/clear")
+      stub_post("/api/v1/notifications/clear")
     end
     subject { client.clear_notifications }
     it "is no return" do

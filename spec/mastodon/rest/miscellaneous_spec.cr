@@ -1,6 +1,8 @@
 require "../../spec_helper"
 
 describe Mastodon::REST::Miscellaneous do
+  let(client) { Mastodon::REST::Client.new("example.com", "token") }
+
   describe ".blocks" do
     before do
       stub_get("/api/v1/blocks", "accounts")
@@ -33,7 +35,7 @@ describe Mastodon::REST::Miscellaneous do
 
   describe ".authorize_follow_request" do
     before do
-      stub_post_no_return("/api/v1/follow_requests/1/authorize")
+      stub_post("/api/v1/follow_requests/1/authorize")
     end
     subject { client.authorize_follow_request(1) }
     it "is no return" do
@@ -43,7 +45,7 @@ describe Mastodon::REST::Miscellaneous do
 
   describe ".reject_follow_request" do
     before do
-      stub_post_no_return("/api/v1/follow_requests/1/reject")
+      stub_post("/api/v1/follow_requests/1/reject")
     end
     subject { client.reject_follow_request(1) }
     it "is no return" do
