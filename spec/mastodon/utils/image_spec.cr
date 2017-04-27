@@ -14,8 +14,14 @@ describe Mastodon::Utils::Image do
         expect(subject).to eq "image/jpeg"
       end
     end
-    describe "with other" do
+    describe "with gif file" do
       subject { Mastodon::Utils::Image.mime_type("avatar.gif") }
+      it "is equal `image/gif`" do
+        expect(subject).to eq "image/gif"
+      end
+    end
+    describe "with other" do
+      subject { Mastodon::Utils::Image.mime_type("avatar.txt") }
       it "is nil" do
         expect(subject).to be_nil
       end

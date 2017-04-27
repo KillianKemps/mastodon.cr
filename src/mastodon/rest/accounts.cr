@@ -17,6 +17,7 @@ module Mastodon
       end
 
       def update_credentials(display_name = "", note = "", avatar = "", header = "")
+        # avatar & header : image/jpeg, image/png, image/gif
         forms = HTTP::Params.build do |form|
           form.add "display_name", "#{display_name}" unless display_name.empty?
           form.add "note", "#{note}" unless note.empty?

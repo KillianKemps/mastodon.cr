@@ -11,6 +11,8 @@ module Mastodon
             "image/png"
           when ".jpg", ".jpeg"
             "image/jpeg"
+          when ".gif"
+            "image/gif"
           else
             nil
         end
