@@ -34,7 +34,7 @@ token = client.get_access_token_using_username_password(
   password: "PASSWORD"
 )
 
-client.authenticate(token.access_token)
+client.authenticate(token)
 ```
 
 ### Client
@@ -45,8 +45,7 @@ client = Mastodon::REST::Client.new(url: "example.com", access_token: "ACCESS_TO
 
 ## Todo
 
-* Link header support
-  * https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#selecting-ranges
+* OAuth : scope handling
 
 ## Contributing
 
