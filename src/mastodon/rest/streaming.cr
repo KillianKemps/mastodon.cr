@@ -25,15 +25,12 @@ module Mastodon
         end
       end
 
-      private def get_stream(path)
+      private def get_stream(path, &block : Entities::Status -> )
         proccess_streaming(path) do |event, data|
           case event
             when "update"
-              yield Entities::Status.from_json(data), nil
-            when "notification"
-              yield nil, Entities::Notification.from_json(data)
+              yield Entities::Status.from_json(data)
             when "delete"
-              # TODO
               next
             else
               next
@@ -41,21 +38,30 @@ module Mastodon
         end
       end
 
-      def streaming_home
-        get_stream("#{STREAMING_BASE}/user") do |status, notification|
-          yield status, notification
+      def streaming_home(&block : Entities::Status | Entities::Notification -> )
+        proccess_streaming("#{STREAMING_BASE}/user") do |event, data|
+          case event
+            when "update"
+              yield Entities::Status.from_json(data)
+            when "notification"
+              yield Entities::Notification.from_json(data)
+            when "delete"
+              next
+            else
+              next
+          end
         end
       end
 
-      def streaming_public
-        get_stream("#{STREAMING_BASE}/public") do |status|
-          yield status
+      def streaming_public(&block : Entities::Status -> )
+        get_stream("#{STREAMING_BASE}/public") do |object|
+          yield object
         end
       end
 
-      def streaming_tag(hashtag)
-        get_stream("#{STREAMING_BASE}/#{hashtag}") do |status|
-          yield status
+      def streaming_tag(hashtag, &block : Entities::Status -> )
+        get_stream("#{STREAMING_BASE}/#{hashtag}") do |object|
+          yield object
         end
       end
     end
