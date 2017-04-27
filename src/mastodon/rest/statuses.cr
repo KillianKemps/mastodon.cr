@@ -7,6 +7,7 @@ module Mastodon
       STATUSES_BASE = "/api/v1/statuses"
 
       def status(id)
+        # Does not require authentication
         response = get("#{STATUSES_BASE}/#{id}")
         Entities::Status.from_json(response)
       end
@@ -29,18 +30,21 @@ module Mastodon
         nil
       end
 
-      def card(id)
-        response = get("#{STATUSES_BASE}/#{id}/card")
-        Entities::Card.from_json(response)
-      end
-
       def context(id)
+        # Does not require authentication
         response = get("#{STATUSES_BASE}/#{id}/context")
         Entities::Context.from_json(response)
       end
 
+      def card(id)
+        # Does not require authentication
+        response = get("#{STATUSES_BASE}/#{id}/card")
+        Entities::Card.from_json(response)
+      end
+
       {% for method in {"reblogged_by", "favourited_by"} %}
       def {{ method.id }}(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
+        # Does not require authentication
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?

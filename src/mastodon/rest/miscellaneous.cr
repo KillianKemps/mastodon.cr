@@ -50,6 +50,7 @@ module Mastodon
       end
 
       def instance
+        # Does not require authentication
         response = get("/api/v1/instance")
         Entities::Instance.from_json(response)
       end
@@ -81,6 +82,7 @@ module Mastodon
       end
 
       def search(query, resolve = false)
+        # Does not require authentication
         params = HTTP::Params.build do |param|
           param.add "q", "#{query}"
           param.add "resolve", "true" if resolve
