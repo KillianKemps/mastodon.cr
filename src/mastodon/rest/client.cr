@@ -20,7 +20,7 @@ module Mastodon
         @http_client = HTTP::Client.new(@url, tls: true)
       end
 
-      def initialize(url : String, access_token : String)
+      def initialize(url : String, access_token : String | OAuth2::AccessToken::Bearer)
         @url = url
         @http_client = HTTP::Client.new(@url, tls: true)
         authenticate(access_token)

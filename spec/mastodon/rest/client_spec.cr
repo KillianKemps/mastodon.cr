@@ -19,8 +19,20 @@ describe Mastodon::REST::Client do
     end
   end
 
-  describe "initialize with acckess token" do
+  describe "initialize with acckess token string" do
     subject { Mastodon::REST::Client.new(url: "example.com", access_token: "TOKEN") }
+
+    it ".access_token is a OAuth2::AccessToken::Bearer" do
+      expect(subject.access_token?).to be_a OAuth2::AccessToken::Bearer
+      expect(subject.access_token.access_token).to eq "TOKEN"
+    end
+  end
+
+  describe "initialize with acckess token" do
+    subject {
+      bearer_token = OAuth2::AccessToken::Bearer.new(access_token: "TOKEN", expires_in: nil)
+      Mastodon::REST::Client.new(url: "example.com", access_token: bearer_token)
+    }
 
     it ".access_token is a OAuth2::AccessToken::Bearer" do
       expect(subject.access_token?).to be_a OAuth2::AccessToken::Bearer
