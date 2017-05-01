@@ -11,12 +11,19 @@ module Mastodon
           case response.status_code
             when 200
               while true
-                lines = response.body_io.gets("\n\n")
-                next if lines =~ /^\s+$/
-                if lines
-                  ary = lines.split(/\n/)
-                  ary.delete_at(0) if ary[0] =~ /:thump/
-                  yield ary[0].lchop("event: "), ary[1].lchop("data: ")
+                begin
+                  line = response.body_io.read_line
+                  next if line =~ /^(\s+|:thump|)$/
+                  if line && line =~ /^event: /
+                    data_line = response.body_io.read_line
+                    if data_line && data_line =~ /^data: /
+                      event = line["event: ".size..-1]
+                      data  = data_line["data: ".size..-1]
+                      yield event, data
+                    end
+                  end
+                rescue # IO::EOFError
+                  break
                 end
               end
             else
