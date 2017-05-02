@@ -21,14 +21,14 @@ module Mastodon
         created_at: { type: Time, converter: Time::Format.new("%Y-%m-%dT%T") },
         reblogs_count: Int32,
         favourites_count: Int32,
-        # reblogged: { type: Bool, nilable: true },
-        # favourited: { type: Bool, nilable: true },
+        reblogged: { type: Bool, nilable: true },
+        favourited: { type: Bool, nilable: true },
         sensitive: { type: Bool, nilable: true },
         spoiler_text: String,
         visibility: String, # public, unlisted, private, direct
-        media_attachments: { type: Array(Entities::Attachment), nilable: true },
-        mentions: { type: Array(Entities::Mention), nilable: true },
-        tags: { type: Array(Entities::Tag), nilable: true },
+        media_attachments: Array(Entities::Attachment),
+        mentions: Array(Entities::Mention),
+        tags: Array(Entities::Tag),
         application: { type: Entities::Application, nilable: true },
       })
 

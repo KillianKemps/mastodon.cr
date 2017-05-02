@@ -6,8 +6,8 @@ module Mastodon
     class Context
 
       JSON.mapping({
-        ancestors: { type: Array(Entities::Status), nilable: true },
-        descendants: { type: Array(Entities::Status), nilable: true },
+        ancestors: Array(Entities::Status),
+        descendants: Array(Entities::Status),
       })
 
     end
