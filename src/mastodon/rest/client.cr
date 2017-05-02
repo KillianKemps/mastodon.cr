@@ -27,7 +27,7 @@ module Mastodon
       end
 
       def get(path : String, params : String | Hash(String, String) = "")
-        params = HTTP::Params.from_hash(params) if params.is_a?(Hash)
+        params = HTTP::Params.encode(params) if params.is_a?(Hash)
         path += "?#{params}" unless params.empty?
         response = @http_client.get(path, defuault_headers)
         proccess_response(response)
@@ -39,7 +39,7 @@ module Mastodon
       end
 
       def patch(path : String, form : String | Hash(String, String) = "")
-        form = HTTP::Params.from_hash(form) if form.is_a?(Hash)
+        form = HTTP::Params.encode(form) if form.is_a?(Hash)
         headers = HTTP::Headers{"Content-type" => "application/x-www-form-urlencoded"}
         response = @http_client.patch(path, headers.merge!(defuault_headers), form)
         proccess_response(response)
