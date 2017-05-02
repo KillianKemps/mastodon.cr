@@ -1,40 +1,30 @@
 require "../../spec_helper"
 
 describe Mastodon::Entities::Status do
-  describe "initialize from JSON" do
-    subject { Mastodon::Entities::Status.from_json(load_fixture("status")) }
-    let(other_status) { Mastodon::Entities::Status.from_json(load_fixture("status")) }
+  subject { Mastodon::Entities::Status.from_json(load_fixture("status")) }
 
+  describe "#from_json" do
     it "is a Mastodon::Entities::Status" do
       expect(subject).to be_a Mastodon::Entities::Status
     end
+  end
 
-    it ".created_at is a Time" do
+  describe "#created_at" do
+    it "is a Time" do
       expect(subject.created_at).to be_a Time
-    end
-
-    it ".account is a Mastodon::Entities::Account" do
-      expect(subject.account).to be_a Mastodon::Entities::Account
-    end
-
-    it "equals by id" do
-      expect(subject).to eq other_status
     end
   end
 
-  describe "initialize from JSON array" do
-    subject { Mastodon::Collection(Mastodon::Entities::Status).from_json(load_fixture("statuses")) }
-
-    it "is a Mastodon::Collection(Mastodon::Entities::Status)" do
-      expect(subject).to be_a Mastodon::Collection(Mastodon::Entities::Status)
+  describe "#account" do
+    it "is a Mastodon::Entities::Account" do
+      expect(subject.account).to be_a Mastodon::Entities::Account
     end
+  end
 
-    it ".next_id is equal minimum of ids" do
-      expect(subject.next_id).to eq 1
-    end
-
-    it ".prev_id is equal maximum of ids" do
-      expect(subject.prev_id).to eq 3
+  describe "#==" do
+    let(other_status) { Mastodon::Entities::Status.from_json(load_fixture("status")) }
+    it "equals by id" do
+      expect(subject).to eq other_status
     end
   end
 end

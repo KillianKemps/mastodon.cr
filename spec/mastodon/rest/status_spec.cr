@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Mastodon::REST::Statuses do
   let(client) { Mastodon::REST::Client.new("example.com", "token") }
 
-  describe ".status(id)" do
+  describe "#status" do
     before do
       stub_get("/api/v1/statuses/1", "status")
     end
@@ -13,7 +13,7 @@ describe Mastodon::REST::Statuses do
     end
   end
 
-  describe ".create_status(status, in_reply_to_id, media_ids, sensitive, spoiler_text, visibility)" do
+  describe "#create_status" do
     before do
       forms = HTTP::Params.build do |form|
         form.add "status", "Hello world"
@@ -26,7 +26,7 @@ describe Mastodon::REST::Statuses do
     end
   end
 
-  describe ".delete_status(id)" do
+  describe "#delete_status" do
     before do
       WebMock.stub(:delete, "https://#{client.url}/api/v1/statuses/1").
         with(headers: {"Authorization" => "Bearer token"}).
@@ -38,7 +38,7 @@ describe Mastodon::REST::Statuses do
     end
   end
 
-  describe ".card(id)" do
+  describe "#card" do
     before do
       stub_get("/api/v1/statuses/1/card", "card")
     end
@@ -48,7 +48,7 @@ describe Mastodon::REST::Statuses do
     end
   end
 
-  describe ".context(id)" do
+  describe "#context" do
     before do
       stub_get("/api/v1/statuses/1/context", "context")
     end
@@ -59,7 +59,7 @@ describe Mastodon::REST::Statuses do
   end
 
   {% for method in {"reblogged_by", "favourited_by"} %}
-  describe ".{{ method.id }}(id, max_id, since_id, limit)" do
+  describe "#" + "{{ method.id }}" do
     before do
       stub_get("/api/v1/statuses/1/{{ method.id }}", "accounts")
     end
@@ -72,7 +72,7 @@ describe Mastodon::REST::Statuses do
 
 
   {% for method in {"reblog", "unreblog", "favourite", "unfavourite"} %}
-  describe ".{{ method.id }}(id)" do
+  describe "#" + "{{ method.id }}" do
     before do
       stub_post("/api/v1/statuses/1/{{ method.id }}", "status")
     end

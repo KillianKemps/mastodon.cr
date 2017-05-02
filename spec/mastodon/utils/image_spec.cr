@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 describe Mastodon::Utils::Image do
-  describe ".mime_type(filename)" do
+  describe "#mime_type" do
     describe "with png file" do
       subject { Mastodon::Utils::Image.mime_type("avatar.png") }
       it "is equal `image/png`" do
@@ -28,7 +28,7 @@ describe Mastodon::Utils::Image do
     end
   end
 
-  describe ".base64_encode(filename)" do
+  describe "#base64_encode" do
     subject { Mastodon::Utils::Image.base64_encode(fixture_image("icon.png")) }
     it "is match data:image/png;base64,..." do
       expect(subject).to match /^data:image\/png;base64,.+=$/

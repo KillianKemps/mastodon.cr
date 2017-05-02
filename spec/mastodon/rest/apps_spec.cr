@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Mastodon::REST::Apps do
   let(client) { Mastodon::REST::Client.new("example.com", "token") }
 
-  describe ".apps" do
+  describe "#apps" do
     before do
       forms = HTTP::Params.build do |form|
         form.add "client_name", "CLIENT_NAME"

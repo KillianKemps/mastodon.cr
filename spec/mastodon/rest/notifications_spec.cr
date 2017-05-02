@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Mastodon::REST::Notifications do
   let(client) { Mastodon::REST::Client.new("example.com", "token") }
 
-  describe ".notifications(max_id, since_id, limit)" do
+  describe "#notifications" do
     before do
       stub_get("/api/v1/notifications", "notifications")
     end
@@ -13,7 +13,7 @@ describe Mastodon::REST::Notifications do
     end
   end
 
-  describe ".notification(id)" do
+  describe "#notification" do
     before do
       stub_get("/api/v1/notifications/1", "notification")
     end
@@ -23,7 +23,7 @@ describe Mastodon::REST::Notifications do
     end
   end
 
-  describe ".delete_notification(id)" do
+  describe "#delete_notification" do
     before do
       stub_post("/api/v1/notifications/dismiss/1")
     end
@@ -33,7 +33,7 @@ describe Mastodon::REST::Notifications do
     end
   end
 
-  describe ".clear_notifications" do
+  describe "#clear_notifications" do
     before do
       stub_post("/api/v1/notifications/clear")
     end

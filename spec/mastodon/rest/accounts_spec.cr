@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Mastodon::REST::Accounts do
   let(client) { Mastodon::REST::Client.new("example.com", "token") }
 
-  describe ".account(id)" do
+  describe "#account" do
     before do
       stub_get("/api/v1/accounts/1", "account")
     end
@@ -13,7 +13,7 @@ describe Mastodon::REST::Accounts do
     end
   end
 
-  describe ".verify_credentials" do
+  describe "#verify_credentials" do
     before do
       stub_get("/api/v1/accounts/verify_credentials", "account")
     end
@@ -23,7 +23,7 @@ describe Mastodon::REST::Accounts do
     end
   end
 
-  describe ".update_credentials(display_name, note, avatar, header)" do
+  describe "#update_credentials" do
     before do
       forms = HTTP::Params.build do |form|
         form.add "display_name", "DISPLAY_NAME"
@@ -45,7 +45,7 @@ describe Mastodon::REST::Accounts do
     end
   end
 
-  describe ".followers(id, max_id, since_id, limit)" do
+  describe "#followers" do
     before do
       stub_get("/api/v1/accounts/1/followers", "accounts")
     end
@@ -55,7 +55,7 @@ describe Mastodon::REST::Accounts do
     end
   end
 
-  describe ".following(id, max_id, since_id, limit)" do
+  describe "#following" do
     before do
       stub_get("/api/v1/accounts/1/following", "accounts")
     end
@@ -65,7 +65,7 @@ describe Mastodon::REST::Accounts do
     end
   end
 
-  describe ".statuses(id, only_media, exclude_replies, max_id, since_id, limit)" do
+  describe "#statuses" do
     before do
       stub_get("/api/v1/accounts/1/statuses", "statuses")
     end
@@ -76,7 +76,7 @@ describe Mastodon::REST::Accounts do
   end
 
   {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
-  describe ".{{ method.id }}(id)" do
+  describe "#" + "{{ method.id }}" do
     before do
       stub_post("/api/v1/accounts/1/{{ method.id }}", "relationship")
     end
@@ -87,7 +87,7 @@ describe Mastodon::REST::Accounts do
   end
   {% end %}
 
-  describe ".relationships(ids)" do
+  describe "#relationships" do
     before do
       params = HTTP::Params.build do |param|
         param.add "id[]", "1"
@@ -100,7 +100,7 @@ describe Mastodon::REST::Accounts do
     end
   end
 
-  describe ".search_accounts(name, limit)" do
+  describe "#search_accounts" do
     before do
       params = HTTP::Params.build do |param|
         param.add "q", "name"

@@ -3,7 +3,7 @@ require "../../spec_helper"
 describe Mastodon::REST::Miscellaneous do
   let(client) { Mastodon::REST::Client.new("example.com", "token") }
 
-  describe ".blocks" do
+  describe "#blocks" do
     before do
       stub_get("/api/v1/blocks", "accounts")
     end
@@ -13,7 +13,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".favourites" do
+  describe "#favourites" do
     before do
       stub_get("/api/v1/favourites", "statuses")
     end
@@ -23,7 +23,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".follow_requests" do
+  describe "#follow_requests" do
     before do
       stub_get("/api/v1/follow_requests", "accounts")
     end
@@ -33,7 +33,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".authorize_follow_request" do
+  describe "#authorize_follow_request" do
     before do
       stub_post("/api/v1/follow_requests/1/authorize")
     end
@@ -43,7 +43,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".reject_follow_request" do
+  describe "#reject_follow_request" do
     before do
       stub_post("/api/v1/follow_requests/1/reject")
     end
@@ -53,7 +53,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".follows(username)" do
+  describe "#follows" do
     before do
       forms = HTTP::Params.build do |form|
         form.add "uri", "user@domain"
@@ -66,7 +66,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".instance" do
+  describe "#instance" do
     before do
       stub_get("/api/v1/instance", "instance")
     end
@@ -76,7 +76,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".mutes" do
+  describe "#mutes" do
     before do
       stub_get("/api/v1/mutes", "accounts")
     end
@@ -86,7 +86,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".reports" do
+  describe "#reports" do
     before do
       stub_get("/api/v1/reports", "reports")
     end
@@ -96,7 +96,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".report(account_id, status_ids, comment)" do
+  describe "#report" do
     before do
       forms = HTTP::Params.build do |form|
         form.add "account_id", "1"
@@ -113,7 +113,7 @@ describe Mastodon::REST::Miscellaneous do
     end
   end
 
-  describe ".search(query, resolve)" do
+  describe "#search" do
     describe "with keyword" do
       before do
         params = HTTP::Params.build do |param|
