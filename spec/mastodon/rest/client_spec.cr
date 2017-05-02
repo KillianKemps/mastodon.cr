@@ -39,4 +39,36 @@ describe Mastodon::REST::Client do
       expect(subject.access_token.access_token).to eq "TOKEN"
     end
   end
+
+  describe ".get(path, params)" do
+    subject { Mastodon::REST::Client.new(url: "example.com") }
+
+    describe "with no params" do
+      before do
+        WebMock.stub(:get, "https://example.com/get").to_return(body: "ok")
+      end
+      it "is valid" do
+        expect(subject.get("/get")).to eq "ok"
+      end
+    end
+
+    describe "with string params" do
+      before do
+        WebMock.stub(:get, "https://example.com/get?param1=1&param2=2").to_return(body: "ok")
+      end
+      it "is valid" do
+        expect(subject.get("/get", "param1=1&param2=2")).to eq "ok"
+      end
+    end
+
+    describe "with hash params" do
+      before do
+        WebMock.stub(:get, "https://example.com/get?param1=1&param2=2").to_return(body: "ok")
+      end
+      it "is valid" do
+        expect(subject.get("/get", { "param1" => "1", "param2" => "2" })).to eq "ok"
+      end
+    end
+  end
+
 end
