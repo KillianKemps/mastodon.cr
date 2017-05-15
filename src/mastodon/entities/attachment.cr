@@ -9,7 +9,7 @@ module Mastodon
         type: String, # "image", "video", "gifv"
         url: String,
         remote_url: { type: String, nilable: true },
-        preview_url: { type: String, nilable: true },
+        preview_url: String,
         text_url: { type: String, nilable: true },
       })
 
