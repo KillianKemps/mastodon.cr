@@ -5,11 +5,11 @@
 ```crystal
 client.streaming_home do |object|
   case object
-    when Mastodon::Entities::Status
-      puts object.content
-    when Mastodon::Entities::Notification
-      puts object.type
-    end
+  when Mastodon::Entities::Status
+    puts object.content
+  when Mastodon::Entities::Notification
+    puts object.type
+  end
 end
 ```
 

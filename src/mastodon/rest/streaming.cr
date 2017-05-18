@@ -9,25 +9,25 @@ module Mastodon
       def proccess_streaming(path : String)
         @http_client.get(path) do |response|
           case response.status_code
-            when 200
-              while true
-                begin
-                  line = response.body_io.read_line
-                  next if line =~ /^(\s+|:thump|)$/
-                  if line && line =~ /^event: /
-                    data_line = response.body_io.read_line
-                    if data_line && data_line =~ /^data: /
-                      event = line["event: ".size..-1]
-                      data  = data_line["data: ".size..-1]
-                      yield event, data
-                    end
+          when 200
+            while true
+              begin
+                line = response.body_io.read_line
+                next if line =~ /^(\s+|:thump|)$/
+                if line && line =~ /^event: /
+                  data_line = response.body_io.read_line
+                  if data_line && data_line =~ /^data: /
+                    event = line["event: ".size..-1]
+                    data  = data_line["data: ".size..-1]
+                    yield event, data
                   end
-                rescue # IO::EOFError
-                  break
                 end
+              rescue # IO::EOFError
+                break
               end
-            else
-              raise REST::Error.new(response)
+            end
+          else
+            raise REST::Error.new(response)
           end
         end
       end
@@ -35,12 +35,12 @@ module Mastodon
       private def get_stream(path, &block : Entities::Status -> )
         proccess_streaming(path) do |event, data|
           case event
-            when "update"
-              yield Entities::Status.from_json(data)
-            when "delete"
-              next
-            else
-              next
+          when "update"
+            yield Entities::Status.from_json(data)
+          when "delete"
+            next
+          else
+            next
           end
         end
       end
@@ -48,14 +48,14 @@ module Mastodon
       def streaming_home(&block : Entities::Status | Entities::Notification -> )
         proccess_streaming("#{STREAMING_BASE}/user") do |event, data|
           case event
-            when "update"
-              yield Entities::Status.from_json(data)
-            when "notification"
-              yield Entities::Notification.from_json(data)
-            when "delete"
-              next
-            else
-              next
+          when "update"
+            yield Entities::Status.from_json(data)
+          when "notification"
+            yield Entities::Notification.from_json(data)
+          when "delete"
+            next
+          else
+            next
           end
         end
       end

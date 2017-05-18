@@ -7,14 +7,14 @@ module Mastodon
 
       def mime_type(finename)
         case File.extname(finename)
-          when ".png"
-            "image/png"
-          when ".jpg", ".jpeg"
-            "image/jpeg"
-          when ".gif"
-            "image/gif"
-          else
-            nil
+        when ".png"
+          "image/png"
+        when ".jpg", ".jpeg"
+          "image/jpeg"
+        when ".gif"
+          "image/gif"
+        else
+          nil
         end
       end
 

@@ -56,10 +56,10 @@ module Mastodon
 
       private def proccess_response(response : HTTP::Client::Response)
         case response.status_code
-          when 200..299
-            return response.body
-          else
-            raise REST::Error.new(response)
+        when 200..299
+          return response.body
+        else
+          raise REST::Error.new(response)
         end
       end
     end
