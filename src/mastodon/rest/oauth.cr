@@ -23,6 +23,29 @@ module Mastodon
         token = Entities::Auth::AccessToken.from_json(response)
         OAuth2::AccessToken::Bearer.new(token.access_token, 172_800, nil, token.scope)
       end
+
+      def get_access_token_using_code(client_id = "", client_secret = "", scopes = "read", code = "", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : OAuth2::AccessToken::Bearer
+        response = post("/oauth/token", {
+          "client_id" => client_id,
+          "client_secret" => client_secret,
+          "scope" => scopes,
+          "grant_type" => "authorization_code",
+          "code" => code,
+          "redirect_uri" => redirect_uri
+        })
+        token = Entities::Auth::AccessToken.from_json(response)
+        OAuth2::AccessToken::Bearer.new(token.access_token, 172_800, nil, token.scope)
+      end
+
+      def oauth_url(client_id = "", scopes = "read", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : String
+        params = HTTP::Params.build do |form|
+          form.add "response_type", "code"
+          form.add "client_id", client_id
+          form.add "scope", scopes
+          form.add "redirect_uri", redirect_uri
+        end
+        "https://#{@url}/oauth/authorize?&#{params}"
+      end
     end
   end
 end
