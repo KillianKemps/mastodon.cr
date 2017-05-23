@@ -3,7 +3,7 @@
 ```crystal
 client = Mastodon::REST::Client.new(url: "example.com")
 
-app =  client.apps(
+app = client.apps(
   "My Mastodon App",           # Application Name
   scopes: "read write follow", # Scope (space separated string)
   website: ""                  # Website URL (optional)

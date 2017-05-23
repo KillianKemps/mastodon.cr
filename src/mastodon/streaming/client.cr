@@ -6,30 +6,79 @@ module Mastodon
     class Client < Mastodon::Client
       STREAMING_BASE = "/api/v1/streaming"
 
-      def user(&block : Entities::Status | Entities::Notification -> )
-        proccess_streaming("#{STREAMING_BASE}/user") do |event, data|
+      @on_update_callback = ->(status : Entities::Status) { }
+      @on_notification_callback = ->(notification : Entities::Notification) { }
+      @on_delete_callback = ->(id : Int32) { }
+
+      def user(&block : Entities::Status | Entities::Notification | Int32 -> )
+        stream("#{STREAMING_BASE}/user") do |object|
+          yield object
+        end
+      end
+
+      def public(&block : Entities::Status | Int32 -> )
+        stream("#{STREAMING_BASE}/public") do |object|
+          yield object if object.is_a?(Entities::Status | Int32)
+        end
+      end
+
+      def hashtag(hashtag, &block : Entities::Status | Int32 -> )
+        stream("#{STREAMING_BASE}/#{hashtag}") do |object|
+          yield object if object.is_a?(Entities::Status | Int32)
+        end
+      end
+
+      def on_update(&block : Entities::Status ->)
+        @on_update_callback = block
+      end
+
+      def on_notification(&block : Entities::Notification ->)
+        @on_notification_callback = block
+      end
+
+      def on_delete(&block : Int32 ->)
+        @on_delete_callback = block
+      end
+
+      def user
+        stream("#{STREAMING_BASE}/user")
+      end
+
+      def public
+        stream("#{STREAMING_BASE}/public")
+      end
+
+      def hashtag(hashtag)
+        stream("#{STREAMING_BASE}/#{hashtag}")
+      end
+
+      private def stream(path, &block : Entities::Status | Entities::Notification | Int32 -> )
+        proccess_streaming(path) do |event, data|
           case event
           when "update"
             yield Entities::Status.from_json(data)
           when "notification"
             yield Entities::Notification.from_json(data)
           when "delete"
-            next
+            yield data.to_i
           else
             next
           end
         end
       end
 
-      def public(&block : Entities::Status -> )
-        stream("#{STREAMING_BASE}/public") do |object|
-          yield object
-        end
-      end
-
-      def hashtag(hashtag, &block : Entities::Status -> )
-        stream("#{STREAMING_BASE}/#{hashtag}") do |object|
-          yield object
+      private def stream(path)
+        proccess_streaming(path) do |event, data|
+          case event
+          when "update"
+            @on_update_callback.call(Entities::Status.from_json(data))
+          when "notification"
+            @on_notification_callback.call(Entities::Notification.from_json(data))
+          when "delete"
+            @on_delete_callback.call(data.to_i)
+          else
+            next
+          end
         end
       end
 
@@ -55,19 +104,6 @@ module Mastodon
             end
           else
             raise Streaming::Error.new(response)
-          end
-        end
-      end
-
-      private def stream(path, &block : Entities::Status -> )
-        proccess_streaming(path) do |event, data|
-          case event
-          when "update"
-            yield Entities::Status.from_json(data)
-          when "delete"
-            next
-          else
-            next
           end
         end
       end
