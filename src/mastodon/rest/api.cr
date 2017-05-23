@@ -6,7 +6,6 @@ require "./media"
 require "./miscellaneous"
 require "./notifications"
 require "./statuses"
-require "./streaming"
 require "./timelines"
 
 module Mastodon
@@ -18,7 +17,6 @@ module Mastodon
       include Mastodon::REST::Miscellaneous
       include Mastodon::REST::Notifications
       include Mastodon::REST::Statuses
-      include Mastodon::REST::Streaming
       include Mastodon::REST::Timelines
     end
   end

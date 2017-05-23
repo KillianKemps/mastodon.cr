@@ -1,56 +1,6 @@
 require "../../spec_helper"
 
 describe Mastodon::REST::Client do
-  describe "#new" do
-    describe "without acckess token" do
-      subject { Mastodon::REST::Client.new(url: "example.com") }
-      it "is a Mastodon::REST::Client" do
-        expect(subject).to be_a Mastodon::REST::Client
-      end
-      describe "#access_token" do
-        it "is nil" do
-          expect(subject.access_token?).to be_nil
-        end
-      end
-    end
-
-    describe "with access token string" do
-      subject { Mastodon::REST::Client.new(url: "example.com", access_token: "TOKEN") }
-      it "is a Mastodon::REST::Client" do
-        expect(subject).to be_a Mastodon::REST::Client
-      end
-      describe "#access_token" do
-        it "is a OAuth2::AccessToken::Bearer" do
-          expect(subject.access_token?).to be_a OAuth2::AccessToken::Bearer
-          expect(subject.access_token.access_token).to eq "TOKEN"
-        end
-      end
-    end
-
-    describe "with access token" do
-      subject {
-        bearer_token = OAuth2::AccessToken::Bearer.new(access_token: "TOKEN", expires_in: nil)
-        Mastodon::REST::Client.new(url: "example.com", access_token: bearer_token)
-      }
-      it "is a Mastodon::REST::Client" do
-        expect(subject).to be_a Mastodon::REST::Client
-      end
-      describe "#access_token" do
-        it "is a OAuth2::AccessToken::Bearer" do
-          expect(subject.access_token?).to be_a OAuth2::AccessToken::Bearer
-          expect(subject.access_token.access_token).to eq "TOKEN"
-        end
-      end
-    end
-  end
-
-  describe "#user_agent" do
-    subject { Mastodon::REST::Client.new(url: "example.com") }
-    it "is equal `mastodon.cr/<version>`" do
-      expect(subject.user_agent).to eq "mastodon.cr/#{Mastodon::VERSION}"
-    end
-  end
-
   describe "#get" do
     let(client) { Mastodon::REST::Client.new("example.com", "token") }
 

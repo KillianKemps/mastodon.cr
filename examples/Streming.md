@@ -3,7 +3,8 @@
 ## Authorized user's home timelines stream
 
 ```crystal
-client.streaming_home do |object|
+client = Mastodon::Streaming::Client.new(url: "example.com", access_token: "ACCESS_TOKEN")
+client.user do |object|
   case object
   when Mastodon::Entities::Status
     puts object.content
@@ -16,7 +17,8 @@ end
 ## Public timelines stream
 
 ```crystal
-client.streaming_public do |status|
+client = Mastodon::Streaming::Client.new(url: "example.com", access_token: "ACCESS_TOKEN")
+client.public do |status|
   status.content
 end
 ```
@@ -25,7 +27,8 @@ end
 ## Public timelines for a hashtag stream
 
 ```crystal
-client.streaming_tag("HASHTAG") do |status|
+client = Mastodon::Streaming::Client.new(url: "example.com", access_token: "ACCESS_TOKEN")
+client.hashtag("HASHTAG") do |status|
   status.content
 end
 ```

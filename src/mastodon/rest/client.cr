@@ -7,24 +7,9 @@ require "./error"
 
 module Mastodon
   module REST
-    class Client
+    class Client < Mastodon::Client
       include Mastodon::REST::Api
       include Mastodon::REST::OAuth
-
-      getter   url : String
-      getter!  access_token : OAuth2::AccessToken::Bearer?
-      property user_agent : String = "mastodon.cr/#{Mastodon::VERSION}"
-
-      def initialize(url : String)
-        @url = url
-        @http_client = HTTP::Client.new(@url, tls: true)
-      end
-
-      def initialize(url : String, access_token : String | OAuth2::AccessToken::Bearer)
-        @url = url
-        @http_client = HTTP::Client.new(@url, tls: true)
-        authenticate(access_token)
-      end
 
       def get(path : String, params : String | Hash(String, String) = "")
         params = HTTP::Params.encode(params) if params.is_a?(Hash)
