@@ -3,10 +3,11 @@ require "json"
 require "oauth2"
 require "./api"
 require "./oauth"
-require "./error"
 
 module Mastodon
   module REST
+    class Error < Mastodon::Error; end
+
     class Client < Mastodon::Client
       include Mastodon::REST::Api
       include Mastodon::REST::OAuth

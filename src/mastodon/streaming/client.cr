@@ -1,8 +1,9 @@
 require "http/client"
-require "./error"
 
 module Mastodon
   module Streaming
+    class Error < Mastodon::Error; end
+
     class Client < Mastodon::Client
       STREAMING_BASE = "/api/v1/streaming"
 
@@ -86,9 +87,8 @@ module Mastodon
         @http_client.get(path) do |response|
           case response.status_code
           when 200
-            while true
-              begin
-                line = response.body_io.read_line
+            begin
+              while line = response.body_io.read_line
                 next if line =~ /^(\s+|:thump|)$/
                 if line && line =~ /^event: /
                   data_line = response.body_io.read_line
@@ -98,9 +98,9 @@ module Mastodon
                     yield event, data
                   end
                 end
-              rescue # IO::EOFError
-                break
               end
+            rescue # IO::EOFError
+              break
             end
           else
             raise Streaming::Error.new(response)
