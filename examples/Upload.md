@@ -6,5 +6,5 @@
 
 ```crystal
 # Upload
-client.media_upload("examples/image.png") # => Mastodon::Entities::Attachment
+media = client.media_upload("examples/image.png") # => Mastodon::Entities::Attachment
 ```

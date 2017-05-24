@@ -8,7 +8,7 @@ client = Mastodon::Streaming::Client.new(url: "example.com", access_token: "ACCE
 
 ## Use blocks
 
-### Authorized user's home timelines stream
+Authorized user's home timelines stream
 
 ```crystal
 client.user do |object|
@@ -23,7 +23,7 @@ client.user do |object|
 end
 ```
 
-### Public timelines stream
+Public timelines stream
 
 ```crystal
 client.public do |object|
@@ -36,7 +36,7 @@ client.public do |object|
 end
 ```
 
-### Public timelines for a hashtag stream
+Public timelines for a hashtag stream
 
 ```crystal
 client.hashtag("HASHTAG") do |object|
@@ -53,14 +53,17 @@ end
 
 ```crystal
 client.on_update do |status|
+  # status => Mastodon::Entities::Status
   puts status
 end
 
 client.on_notification do |notification|
+  # notification => Mastodon::Entities::Notification
   puts notification
 end
 
 client.on_delete do |id|
+  # id => Integer
   puts id
 end
 
