@@ -14,6 +14,10 @@ def load_fixture(name)
   File.read_lines(File.dirname(__FILE__) + "/fixtures/#{name}.json").join("\n")
 end
 
+def load_response(name)
+  File.read_lines(File.dirname(__FILE__) + "/fixtures/#{name}.txt").join("\n")
+end
+
 # GET
 def stub_get(path, fixture, query = "")
   query = "?#{query}" unless query.empty?
