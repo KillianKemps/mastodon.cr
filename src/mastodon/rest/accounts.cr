@@ -61,7 +61,7 @@ module Mastodon
         Collection(Entities::Status).from_json(response)
       end
 
-      {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
+      {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute", "mute_boosts", "unmute_boosts"} %}
       def {{ method.id }}(id)
         response = post("#{ACCOUNTS_BASE}/#{id}/{{ method.id }}")
         Entities::Relationship.from_json(response)

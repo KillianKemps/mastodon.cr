@@ -5,6 +5,7 @@
     "followed_by": false,
     "blocking": false,
     "muting": false,
+    "muting_boosts": false,
     "requested": false
   },
   {
@@ -13,6 +14,7 @@
     "followed_by": false,
     "blocking": false,
     "muting": false,
+    "muting_boosts": false,
     "requested": false
   },
   {
@@ -21,6 +23,7 @@
     "followed_by": false,
     "blocking": false,
     "muting": false,
+    "muting_boosts": false,
     "requested": false
   }
 ]

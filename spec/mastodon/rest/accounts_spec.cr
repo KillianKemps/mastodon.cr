@@ -75,7 +75,7 @@ describe Mastodon::REST::Accounts do
     end
   end
 
-  {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute"} %}
+  {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute", "mute_boosts", "unmute_boosts"} %}
   describe "#" + "{{ method.id }}" do
     before do
       stub_post("/api/v1/accounts/1/{{ method.id }}", "relationship")
