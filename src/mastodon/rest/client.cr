@@ -36,10 +36,6 @@ module Mastodon
         proccess_response(response)
       end
 
-      private def defuault_headers
-        HTTP::Headers{"User-Agent" => "#{@user_agent}"}
-      end
-
       private def proccess_response(response : HTTP::Client::Response)
         case response.status_code
         when 200..299

@@ -84,7 +84,7 @@ module Mastodon
       end
 
       private def proccess_streaming(path : String)
-        @http_client.get(path) do |response|
+        @http_client.get(path, defuault_headers) do |response|
           case response.status_code
           when 200
             begin

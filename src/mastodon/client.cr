@@ -27,5 +27,9 @@ module Mastodon
       @access_token = access_token
       @access_token.not_nil!.authenticate(@http_client)
     end
+
+    private def defuault_headers
+      HTTP::Headers{"User-Agent" => "#{@user_agent}"}
+    end
   end
 end
