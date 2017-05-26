@@ -29,33 +29,33 @@ module Mastodon
         Entities::Account.from_json(response)
       end
 
-      def followers(id, max_id = nil, since_id = nil, limit = ACCOUNTS_LIMIT)
+      def followers(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != ACCOUNTS_LIMIT && limit <= ACCOUNTS_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/followers", params)
         Collection(Entities::Account).from_json(response)
       end
 
-      def following(id, max_id = nil, since_id = nil, limit = ACCOUNTS_LIMIT)
+      def following(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != ACCOUNTS_LIMIT && limit <= ACCOUNTS_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/following")
         Collection(Entities::Account).from_json(response)
       end
 
-      def statuses(id, only_media = false, exclude_replies = false, max_id = nil, since_id = nil, limit = STATUSES_LIMIT)
+      def statuses(id, only_media = false, exclude_replies = false, max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "only_media", "" if only_media
           param.add "exclude_replies", "" if exclude_replies
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != STATUSES_LIMIT && limit <= STATUSES_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= DEFAULT_STATUSES_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/statuses", params)
         Collection(Entities::Status).from_json(response)
@@ -77,10 +77,10 @@ module Mastodon
         Collection(Entities::Relationship).from_json(response)
       end
 
-      def search_accounts(name, limit = ACCOUNTS_LIMIT)
+      def search_accounts(name, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "q", "#{name}"
-          param.add "limit", "#{limit}" if limit != ACCOUNTS_LIMIT && limit <= ACCOUNTS_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/search", params)
         Collection(Entities::Account).from_json(response)

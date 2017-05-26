@@ -43,12 +43,12 @@ module Mastodon
       end
 
       {% for method in {"reblogged_by", "favourited_by"} %}
-      def {{ method.id }}(id, max_id = nil, since_id = nil, limit = ACCOUNTS_LIMIT)
+      def {{ method.id }}(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         # Does not require authentication
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != ACCOUNTS_LIMIT && limit <= ACCOUNTS_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{STATUSES_BASE}/#{id}/{{ method.id }}", params)
         Collection(Entities::Account).from_json(response)

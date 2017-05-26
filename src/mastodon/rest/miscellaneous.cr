@@ -4,31 +4,31 @@ require "json"
 module Mastodon
   module REST
     module Miscellaneous
-      def blocks(max_id = nil, since_id = nil, limit = ACCOUNTS_LIMIT)
+      def blocks(max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != ACCOUNTS_LIMIT && limit <= ACCOUNTS_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("/api/v1/blocks", params)
         Collection(Entities::Account).from_json(response)
       end
 
-      def favourites(max_id = nil, since_id = nil, limit = STATUSES_LIMIT)
+      def favourites(max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != STATUSES_LIMIT && limit <= STATUSES_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= DEFAULT_STATUSES_LIMIT * 2
         end
         response = get("/api/v1/favourites")
         Collection(Entities::Status).from_json(response)
       end
 
-      def follow_requests(max_id = nil, since_id = nil, limit = ACCOUNTS_LIMIT)
+      def follow_requests(max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != ACCOUNTS_LIMIT && limit <= ACCOUNTS_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("/api/v1/follow_requests", params)
         Collection(Entities::Account).from_json(response)
@@ -55,11 +55,11 @@ module Mastodon
         Entities::Instance.from_json(response)
       end
 
-      def mutes(max_id = nil, since_id = nil, limit = ACCOUNTS_LIMIT)
+      def mutes(max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
         params = HTTP::Params.build do |param|
           param.add "max_id", "#{max_id}" unless max_id.nil?
           param.add "since_id", "#{since_id}" unless since_id.nil?
-          param.add "limit", "#{limit}" if limit != ACCOUNTS_LIMIT && limit <= ACCOUNTS_LIMIT * 2
+          param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("/api/v1/mutes", params)
         Collection(Entities::Account).from_json(response)
