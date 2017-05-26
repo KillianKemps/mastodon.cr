@@ -30,6 +30,7 @@ module Mastodon
         mentions: Array(Entities::Mention),
         tags: Array(Entities::Tag),
         application: { type: Entities::Application, nilable: true },
+        language: String,
       })
 
       def_equals id

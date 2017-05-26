@@ -32,7 +32,8 @@
     "url": "https://example.com/@USER/1",
     "reblogs_count": 1,
     "favourites_count": 1,
-    "reblog": null
+    "reblog": null,
+    "language": ""
   },
   {
     "id": 2,
@@ -67,7 +68,8 @@
     "url": "https://example.com/@USER/1",
     "reblogs_count": 1,
     "favourites_count": 1,
-    "reblog": null
+    "reblog": null,
+    "language": ""
   },
   {
     "id": 3,
@@ -102,6 +104,7 @@
     "url": "https://example.com/@USER/1",
     "reblogs_count": 1,
     "favourites_count": 1,
-    "reblog": null
+    "reblog": null,
+    "language": ""
   }
 ]

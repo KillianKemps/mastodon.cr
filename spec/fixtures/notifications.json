@@ -71,7 +71,8 @@
       "tags": [],
       "uri": "tag:example.com,2017-04-14:objectId=14513:objectType=Status",
       "url": "https://example.com/@USER/14513",
-      "visibility": "public"
+      "visibility": "public",
+      "language": ""
     },
     "type": "reblog"
   },
@@ -125,7 +126,8 @@
       "tags": [],
       "uri": "tag:example.com,2017-04-14:objectId=14513:objectType=Status",
       "url": "https://example.com/@USER/14513",
-      "visibility": "public"
+      "visibility": "public",
+      "language": ""
     },
     "type": "favourite"
   }
