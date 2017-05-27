@@ -12,6 +12,7 @@ module Mastodon
         muting: Bool,
         muting_boosts: Bool,
         requested: Bool,
+        domain_blocking: Bool,
       })
 
     end
