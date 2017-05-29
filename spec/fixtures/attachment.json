@@ -3,5 +3,19 @@
   "type": "image",
   "url": "https://example.com/system/media_attachments/files/000/000/000/original/IMAGE.png?XXXXX",
   "preview_url": "https://example.com/system/media_attachments/files/000/000/000/small/IMAGE.png?XXXXX",
-  "text_url": "https://example.com/media/URL"
+  "text_url": "https://example.com/media/URL",
+  "meta": {
+    "original": {
+      "width": 60,
+      "height": 60,
+      "size": "60x60",
+      "aspect": 1.0
+    },
+    "small": {
+      "width": 60,
+      "height": 60,
+      "size": "60x60",
+      "aspect": 1.0
+    }
+  }
 }

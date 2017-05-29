@@ -13,6 +13,7 @@ describe Mastodon::REST::Media do
     subject { client.media_upload(fixture_image("icon.png")) }
     it "is a Mastodon::Entities::Attachment" do
       expect(subject).to be_a Mastodon::Entities::Attachment
+      expect(subject.meta).to be_a Hash(String, Mastodon::Entities::Attachment::MetaData)
     end
 
     describe "with invalid file" do
