@@ -6,7 +6,7 @@ module Mastodon
       class App
 
         JSON.mapping({
-          id: Int32,
+          id: Int64,
           redirect_uri: String,
           client_id: String,
           client_secret: String,

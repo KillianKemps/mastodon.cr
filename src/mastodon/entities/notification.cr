@@ -7,7 +7,7 @@ module Mastodon
     class Notification
 
       JSON.mapping({
-        id: Int32,
+        id: Int64,
         type: String, # "mention", "reblog", "favourite", "follow"
         created_at: { type: Time, converter: Time::Format.new("%Y-%m-%dT%T") },
         account: Entities::Account,

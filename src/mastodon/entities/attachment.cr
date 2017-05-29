@@ -5,7 +5,7 @@ module Mastodon
     class Attachment
 
       JSON.mapping({
-        id: Int32,
+        id: Int64,
         type: String, # "image", "video", "gifv"
         url: String,
         remote_url: { type: String, nilable: true },

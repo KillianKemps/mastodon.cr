@@ -10,12 +10,12 @@ module Mastodon
     class Status
 
       JSON.mapping({
-        id: Int32,
+        id: Int64,
         uri: String,
         url: String,
         account: Entities::Account,
-        in_reply_to_id: { type: Int32, nilable: true },
-        in_reply_to_account_id: { type: Int32, nilable: true },
+        in_reply_to_id: { type: Int64, nilable: true },
+        in_reply_to_account_id: { type: Int64, nilable: true },
         reblog: { type: Entities::Status, nilable: true },
         content: String,
         created_at: { type: Time, converter: Time::Format.new("%Y-%m-%dT%T") },
