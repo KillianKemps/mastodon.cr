@@ -31,8 +31,10 @@ module Mastodon
         proccess_response(response)
       end
 
-      def delete(path : String)
-        response = @http_client.delete(path, defuault_headers)
+      def delete(path : String, form : String | Hash(String, String) = "")
+        form = HTTP::Params.encode(form) if form.is_a?(Hash)
+        headers = HTTP::Headers{"Content-type" => "application/x-www-form-urlencoded"}
+        response = @http_client.delete(path, headers.merge!(defuault_headers), form)
         proccess_response(response)
       end
 

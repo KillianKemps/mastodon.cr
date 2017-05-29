@@ -10,8 +10,9 @@ module Mastodon
         followed_by: Bool,
         blocking: Bool,
         muting: Bool,
-        muting_boosts: Bool,
+        # muting_boosts: Bool,
         requested: Bool,
+        domain_blocking: Bool,
       })
 
     end

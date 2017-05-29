@@ -5,8 +5,8 @@
     "followed_by": false,
     "blocking": false,
     "muting": false,
-    "muting_boosts": false,
-    "requested": false
+    "requested": false,
+    "domain_blocking": false
   },
   {
     "id": 2,
@@ -14,8 +14,8 @@
     "followed_by": false,
     "blocking": false,
     "muting": false,
-    "muting_boosts": false,
-    "requested": false
+    "requested": false,
+    "domain_blocking": false
   },
   {
     "id": 3,
@@ -23,7 +23,7 @@
     "followed_by": false,
     "blocking": false,
     "muting": false,
-    "muting_boosts": false,
-    "requested": false
+    "requested": false,
+    "domain_blocking": false
   }
 ]
