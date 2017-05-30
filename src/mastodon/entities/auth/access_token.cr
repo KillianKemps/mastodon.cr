@@ -12,7 +12,6 @@ module Mastodon
           created_at: Int64,
         })
 
-        def_equals id
       end
     end
   end
