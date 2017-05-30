@@ -6,7 +6,7 @@ describe Mastodon::REST::Media do
   describe "#media_upload" do
     before do
       WebMock.stub(:post, "https://#{client.url}/api/v1/media").
-        with(headers: {"Authorization" => "Bearer token", "User-Agent" => "mastodon.cr/0.1.0"}).
+        with(headers: default_headers).
         to_return(body: load_fixture("attachment"))
     end
 

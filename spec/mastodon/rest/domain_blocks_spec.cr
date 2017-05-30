@@ -32,7 +32,7 @@ describe Mastodon::REST::DomainBlocks do
         form.add "domain", "some.domain"
       end
       WebMock.stub(:delete, "https://#{client.url}/api/v1/domain_blocks").
-        with(body: forms, headers: {"Authorization" => "Bearer token"}).
+        with(body: forms, headers: default_headers).
         to_return(body: "{}")
     end
     subject { client.unblock_domain("some.domain") }

@@ -5,13 +5,12 @@ describe Mastodon::REST::Apps do
 
   describe "#apps" do
     before do
-      forms = HTTP::Params.build do |form|
-        form.add "client_name", "CLIENT_NAME"
-        form.add "redirect_uris", "urn:ietf:wg:oauth:2.0:oob"
-        form.add "scopes", "read write follow"
-        form.add "website",  ""
-      end
-      stub_post("/api/v1/apps", "apps", forms)
+      stub_post("/api/v1/apps", "apps", {
+        "client_name" => "CLIENT_NAME",
+        "redirect_uris" => "urn:ietf:wg:oauth:2.0:oob",
+        "scopes" => "read write follow",
+        "website" => ""
+      })
     end
     subject { client.apps("CLIENT_NAME", redirect_uris: "urn:ietf:wg:oauth:2.0:oob", scopes: "read write follow", website: "") }
     it "is a Mastodon::Entities::Auth::App" do
