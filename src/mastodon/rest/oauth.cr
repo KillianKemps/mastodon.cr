@@ -14,7 +14,7 @@ module Mastodon
         OAuth2::AccessToken::Bearer.new(token.access_token, 172_800, nil, token.scope)
       end
 
-      def get_access_token_using_code(client_id = "", client_secret = "", scopes = "read", code = "", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : OAuth2::AccessToken::Bearer
+      def get_access_token_using_authorization_code(client_id = "", client_secret = "", scopes = "read", code = "", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : OAuth2::AccessToken::Bearer
         response = post("/oauth/token", {
           "client_id" => client_id,
           "client_secret" => client_secret,
@@ -27,14 +27,15 @@ module Mastodon
         OAuth2::AccessToken::Bearer.new(token.access_token, 172_800, nil, token.scope)
       end
 
-      def oauth_url(client_id = "", scopes = "read", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : String
-        params = HTTP::Params.build do |form|
-          form.add "response_type", "code"
-          form.add "client_id", client_id
-          form.add "scope", scopes
-          form.add "redirect_uri", redirect_uri
-        end
-        "https://#{@url}/oauth/authorize?&#{params}"
+      def authorize_uri(client_id = "", client_secret = "", scopes = "read", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : String
+        client = OAuth2::Client.new(
+          @http_client.host,
+          client_id,
+          client_secret,
+          authorize_uri: "/oauth/authorize",
+          redirect_uri: redirect_uri
+        )
+        client.get_authorize_uri(scopes)
       end
     end
   end

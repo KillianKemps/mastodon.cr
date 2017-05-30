@@ -21,7 +21,7 @@ client.authenticate(token)
 ```crystal
 client = Mastodon::REST::Client.new(url: "example.com")
 
-url = client.oauth_url(
+url = client.authorize_uri(
   client_id: "CLIENT_ID",
   scopes: "read write follow",    # Scope (space separated string)
 )
@@ -30,7 +30,7 @@ puts url # Authorization URL
 ```
 
 ```crystal
-token = client.get_access_token_using_code(
+token = client.get_access_token_using_authorization_code(
   client_id: "CLIENT_ID",
   client_secret: "CLIENT_SECRET",
   scopes: "read write follow",    # Scope (space separated string)
