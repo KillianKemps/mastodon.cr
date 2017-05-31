@@ -9,7 +9,7 @@ module Mastodon
         title: String,
         description: String,
         email: String,
-        version: { type: String, nilable: true },
+        version: String,
       })
 
     end
