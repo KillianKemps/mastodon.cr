@@ -4,6 +4,8 @@ require "json"
 module Mastodon
   module REST
     module Media
+      private MEDIA_BASE = "/api/v1/media"
+
       def media_upload(filename)
         # image/jpeg, image/png, image/gif
         # video/webm, video/mp4
@@ -15,7 +17,7 @@ module Mastodon
             "Content-Type" => "#{form_data.content_type}",
             "User-Agent" => "#{@user_agent}"
           }
-          response = @http_client.post("/api/v1/media", headers, form_data.io.to_slice)
+          response = @http_client.post("#{MEDIA_BASE}", headers, form_data.io.to_slice)
           body = proccess_response(response)
           Entities::Attachment.from_json(body)
         end

@@ -4,7 +4,7 @@ require "json"
 module Mastodon
   module REST
     module Statuses
-      STATUSES_BASE = "/api/v1/statuses"
+      private STATUSES_BASE = "/api/v1/statuses"
 
       def status(id)
         # Does not require authentication

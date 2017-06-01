@@ -5,7 +5,7 @@ module Mastodon
     class Error < Mastodon::Error; end
 
     class Client < Mastodon::Client
-      STREAMING_BASE = "/api/v1/streaming"
+      private STREAMING_BASE = "/api/v1/streaming"
 
       @on_update_callback = ->(status : Entities::Status) { }
       @on_notification_callback = ->(notification : Entities::Notification) { }

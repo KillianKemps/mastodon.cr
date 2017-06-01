@@ -4,7 +4,7 @@ require "json"
 module Mastodon
   module REST
     module Timelines
-      TIMELINES_BASE = "/api/v1/timelines"
+      private TIMELINES_BASE = "/api/v1/timelines"
 
       def timeline_home(max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
         params = HTTP::Params.build do |param|

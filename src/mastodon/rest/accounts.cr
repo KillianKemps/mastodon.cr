@@ -4,7 +4,7 @@ require "json"
 module Mastodon
   module REST
     module Accounts
-      ACCOUNTS_BASE = "/api/v1/accounts"
+      private ACCOUNTS_BASE = "/api/v1/accounts"
 
       def account(id)
         response = get("#{ACCOUNTS_BASE}/#{id}")

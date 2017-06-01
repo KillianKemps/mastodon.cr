@@ -4,8 +4,10 @@ require "json"
 module Mastodon
   module REST
     module Reports
+      private REPORTS_BASE = "/api/v1/reports"
+
       def reports
-        response = get("/api/v1/reports")
+        response = get("#{REPORTS_BASE}")
         Collection(Entities::Report).from_json(response)
       end
 
@@ -16,7 +18,7 @@ module Mastodon
           status_ids.map { |id| form.add "status_ids[]", "#{id}" } if status_ids.is_a?(Array(Int32))
           form.add "comment", "#{comment}"
         end
-        response = post("/api/v1/reports", forms)
+        response = post("#{REPORTS_BASE}", forms)
         Entities::Report.from_json(response)
       end
     end

@@ -4,7 +4,7 @@ require "json"
 module Mastodon
   module REST
     module Notifications
-      NOTIFICATIONS_BASE = "/api/v1/notifications"
+      private NOTIFICATIONS_BASE = "/api/v1/notifications"
 
       def notifications(max_id = nil, since_id = nil, limit = DEFAULT_NOTIFICATIONS_LIMIT)
         params = HTTP::Params.build do |param|
