@@ -1,4 +1,4 @@
-require "http/client"
+require "../client"
 
 module Mastodon
   module Streaming

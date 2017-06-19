@@ -27,11 +27,11 @@ module Mastodon
         OAuth2::AccessToken::Bearer.new(token.access_token, 172_800, nil, token.scope)
       end
 
-      def authorize_uri(client_id = "", client_secret = "", scopes = "read", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : String
+      def authorize_uri(client_id = "", scopes = "read", redirect_uri = "urn:ietf:wg:oauth:2.0:oob") : String
         client = OAuth2::Client.new(
           @http_client.host,
           client_id,
-          client_secret,
+          "",
           authorize_uri: "/oauth/authorize",
           redirect_uri: redirect_uri
         )
