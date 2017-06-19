@@ -13,12 +13,12 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_NOTIFICATIONS_LIMIT && limit <= DEFAULT_NOTIFICATIONS_LIMIT * 2
         end
         response = get("#{NOTIFICATIONS_BASE}", params)
-        Collection(Entities::Notification).from_json(response)
+        Entities.from_response(response, Collection(Entities::Notification))
       end
 
       def notification(id)
         response = get("#{NOTIFICATIONS_BASE}/#{id}")
-        Entities::Notification.from_json(response)
+        Entities.from_response(response, Entities::Notification)
       end
 
       def delete_notification(id)

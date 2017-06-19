@@ -13,7 +13,7 @@ module Mastodon
           param.add "resolve", "true" if resolve
         end
         response = get("#{SEARCH_BASE}", params)
-        Entities::Results.from_json(response)
+        Entities.from_response(response, Entities::Results)
       end
     end
   end

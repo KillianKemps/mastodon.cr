@@ -8,7 +8,7 @@ module Mastodon
 
       def reports
         response = get("#{REPORTS_BASE}")
-        Collection(Entities::Report).from_json(response)
+        Entities.from_response(response, Collection(Entities::Report))
       end
 
       def report(account_id, status_ids : Int32 | Array(Int32), comment = "")
@@ -19,7 +19,7 @@ module Mastodon
           form.add "comment", "#{comment}"
         end
         response = post("#{REPORTS_BASE}", forms)
-        Entities::Report.from_json(response)
+        Entities.from_response(response, Entities::Report)
       end
     end
   end

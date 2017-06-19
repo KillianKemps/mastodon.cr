@@ -13,7 +13,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{BLOCKS_BASE}", params)
-        Collection(Entities::Account).from_json(response)
+        Entities.from_response(response, Collection(Entities::Account))
       end
     end
   end

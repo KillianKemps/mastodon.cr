@@ -13,7 +13,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= DEFAULT_STATUSES_LIMIT * 2
         end
         response = get("#{TIMELINES_BASE}/home", params)
-        Collection(Entities::Status).from_json(response)
+        Entities.from_response(response, Collection(Entities::Status))
       end
 
       def timeline_public(local = false, max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
@@ -25,7 +25,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= DEFAULT_STATUSES_LIMIT * 2
         end
         response = get("#{TIMELINES_BASE}/public", params)
-        Collection(Entities::Status).from_json(response)
+        Entities.from_response(response, Collection(Entities::Status))
       end
 
       def timeline_tag(hashtag, local = false, max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
@@ -37,7 +37,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= DEFAULT_STATUSES_LIMIT * 2
         end
         response = get("#{TIMELINES_BASE}/tag/#{hashtag}", params)
-        Collection(Entities::Status).from_json(response)
+        Entities.from_response(response, Collection(Entities::Status))
       end
     end
   end

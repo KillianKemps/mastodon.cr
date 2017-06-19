@@ -9,7 +9,7 @@ module Mastodon
       def instance
         # Does not require authentication
         response = get("#{INSTANCES_BASE}")
-        Entities::Instance.from_json(response)
+        Entities.from_response(response, Entities::Instance)
       end
     end
   end

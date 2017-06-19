@@ -13,7 +13,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{FOLLOW_REQUESTS_BASE}", params)
-        Collection(Entities::Account).from_json(response)
+        Entities.from_response(response, Collection(Entities::Account))
       end
 
       def authorize_follow_request(id)

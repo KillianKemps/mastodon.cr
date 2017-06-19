@@ -8,12 +8,12 @@ module Mastodon
 
       def account(id)
         response = get("#{ACCOUNTS_BASE}/#{id}")
-        Entities::Account.from_json(response)
+        Entities.from_response(response, Entities::Account)
       end
 
       def verify_credentials
         response = get("#{ACCOUNTS_BASE}/verify_credentials")
-        Entities::Account.from_json(response)
+        Entities.from_response(response, Entities::Account)
       end
 
       def update_credentials(display_name = "", note = "", avatar = "", header = "")
@@ -26,7 +26,7 @@ module Mastodon
         end
         raise ArgumentError.new("Incorrect updating data") if forms.empty?
         response = patch("#{ACCOUNTS_BASE}/update_credentials", forms)
-        Entities::Account.from_json(response)
+        Entities.from_response(response, Entities::Account)
       end
 
       def followers(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
@@ -36,7 +36,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/followers", params)
-        Collection(Entities::Account).from_json(response)
+        Entities.from_response(response, Collection(Entities::Account))
       end
 
       def following(id, max_id = nil, since_id = nil, limit = DEFAULT_ACCOUNTS_LIMIT)
@@ -46,7 +46,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/following")
-        Collection(Entities::Account).from_json(response)
+        Entities.from_response(response, Collection(Entities::Account))
       end
 
       def statuses(id, only_media = false, exclude_replies = false, max_id = nil, since_id = nil, limit = DEFAULT_STATUSES_LIMIT)
@@ -58,13 +58,13 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= DEFAULT_STATUSES_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/#{id}/statuses", params)
-        Collection(Entities::Status).from_json(response)
+        Entities.from_response(response, Collection(Entities::Status))
       end
 
       {% for method in {"follow", "unfollow", "block", "unblock", "mute", "unmute", "mute_boosts", "unmute_boosts"} %}
       def {{ method.id }}(id)
         response = post("#{ACCOUNTS_BASE}/#{id}/{{ method.id }}")
-        Entities::Relationship.from_json(response)
+        Entities.from_response(response, Entities::Relationship)
       end
       {% end %}
 
@@ -74,7 +74,7 @@ module Mastodon
           ids.map { |id| param.add "id[]", "#{id}" } if ids.is_a?(Array(Int32))
         end
         response = get("#{ACCOUNTS_BASE}/relationships", params)
-        Collection(Entities::Relationship).from_json(response)
+        Entities.from_response(response, Collection(Entities::Relationship))
       end
 
       def search_accounts(name, limit = DEFAULT_ACCOUNTS_LIMIT)
@@ -83,7 +83,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{ACCOUNTS_BASE}/search", params)
-        Collection(Entities::Account).from_json(response)
+        Entities.from_response(response, Collection(Entities::Account))
       end
     end
   end

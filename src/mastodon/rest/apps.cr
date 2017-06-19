@@ -13,7 +13,7 @@ module Mastodon
           "scopes" => scopes,
           "website" => website
         })
-        Entities::Auth::App.from_json(response)
+        Entities.from_response(response, Entities::Auth::App)
       end
     end
   end

@@ -10,7 +10,7 @@ module Mastodon
           "username" => username,
           "password" => password
         })
-        token = Entities::Auth::AccessToken.from_json(response)
+        token = Entities.from_response(response, Entities::Auth::AccessToken)
         OAuth2::AccessToken::Bearer.new(token.access_token, 172_800, nil, token.scope)
       end
 
@@ -23,7 +23,7 @@ module Mastodon
           "code" => code,
           "redirect_uri" => redirect_uri
         })
-        token = Entities::Auth::AccessToken.from_json(response)
+        token = Entities.from_response(response, Entities::Auth::AccessToken)
         OAuth2::AccessToken::Bearer.new(token.access_token, 172_800, nil, token.scope)
       end
 

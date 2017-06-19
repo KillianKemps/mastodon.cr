@@ -13,7 +13,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != 40 && limit <= 40 * 2
         end
         response = get("#{DOMAIN_BLOCKS_BASE}", params)
-        Collection(String).from_json(response)
+        Entities.from_response(response, Collection(String))
       end
 
       def block_domain(domain)

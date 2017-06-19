@@ -13,7 +13,7 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_STATUSES_LIMIT && limit <= DEFAULT_STATUSES_LIMIT * 2
         end
         response = get("#{FAVOURITES_BASE}")
-        Collection(Entities::Status).from_json(response)
+        Entities.from_response(response, Collection(Entities::Status))
       end
     end
   end

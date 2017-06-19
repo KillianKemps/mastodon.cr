@@ -9,7 +9,7 @@ module Mastodon
       def status(id)
         # Does not require authentication
         response = get("#{STATUSES_BASE}/#{id}")
-        Entities::Status.from_json(response)
+        Entities.from_response(response, Entities::Status)
       end
 
       def create_status(status, in_reply_to_id = nil, media_ids = [] of Int32, sensitive = false, spoiler_text = "", visibility = "")
@@ -22,7 +22,7 @@ module Mastodon
           form.add "visibility", "#{visibility}" if ["direct", "private", "unlisted", "public"].includes?(visibility)
         end
         response = post("#{STATUSES_BASE}", forms)
-        Entities::Status.from_json(response)
+        Entities.from_response(response, Entities::Status)
       end
 
       def delete_status(id)
@@ -33,13 +33,13 @@ module Mastodon
       def context(id)
         # Does not require authentication
         response = get("#{STATUSES_BASE}/#{id}/context")
-        Entities::Context.from_json(response)
+        Entities.from_response(response, Entities::Context)
       end
 
       def card(id)
         # Does not require authentication
         response = get("#{STATUSES_BASE}/#{id}/card")
-        Entities::Card.from_json(response)
+        Entities.from_response(response, Entities::Card)
       end
 
       {% for method in {"reblogged_by", "favourited_by"} %}
@@ -51,14 +51,14 @@ module Mastodon
           param.add "limit", "#{limit}" if limit != DEFAULT_ACCOUNTS_LIMIT && limit <= DEFAULT_ACCOUNTS_LIMIT * 2
         end
         response = get("#{STATUSES_BASE}/#{id}/{{ method.id }}", params)
-        Collection(Entities::Account).from_json(response)
+        Entities.from_response(response, Collection(Entities::Account))
       end
       {% end %}
 
       {% for method in {"reblog", "unreblog", "favourite", "unfavourite"} %}
       def {{ method.id }}(id)
         response = post("#{STATUSES_BASE}/#{id}/{{ method.id }}")
-        Entities::Status.from_json(response)
+        Entities.from_response(response, Entities::Status)
       end
       {% end %}
     end

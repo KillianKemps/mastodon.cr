@@ -8,7 +8,7 @@ module Mastodon
 
       def follows(username)
         response = post("#{FOLLOWS_BASE}", { "uri" => "#{username}" })
-        Entities::Account.from_json(response)
+        Entities.from_response(response, Entities::Account)
       end
     end
   end
