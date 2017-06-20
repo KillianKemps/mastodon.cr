@@ -12,14 +12,8 @@ module Mastodon
         raise ArgumentError.new("File not found") unless File.file?(filename)
         File.open(filename, "rb") do |file|
           form_data = Utils::MultipartFormData.new("file", File.basename(filename), file)
-          headers = HTTP::Headers{
-            "Content-Length" => "#{form_data.size}",
-            "Content-Type" => "#{form_data.content_type}",
-            "User-Agent" => "#{@user_agent}"
-          }
-          response = @http_client.post("#{MEDIA_BASE}", headers, form_data.io.to_slice)
-          body = proccess_response(response)
-          Entities.from_response(body, Entities::Attachment)
+          response = post_formdata("#{MEDIA_BASE}", form_data)
+          Entities.from_response(response, Entities::Attachment)
         end
       end
     end
