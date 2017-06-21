@@ -1,10 +1,14 @@
 require "../../spec_helper"
 
 describe Mastodon::Utils::MultipartFormData do
+  let(filename) { fixture_image("icon.png") }
+  let(file) { File.open(filename, "rb") }
+
   subject {
-    filename = fixture_image("icon.png")
-    file = File.open(filename, "rb")
-    Mastodon::Utils::MultipartFormData.new("file", File.basename(filename), file)
+    multipart = Mastodon::Utils::MultipartFormData.new
+    multipart.add_file("file", File.basename(filename), file)
+    multipart.finish
+    multipart
   }
 
   describe "#content_type" do
