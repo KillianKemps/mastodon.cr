@@ -27,7 +27,7 @@ module Mastodon
           "Content-Length" => "#{form_data.size}",
           "Content-Type" => "#{form_data.content_type}"
         }
-        response = @http_client.post("#{MEDIA_BASE}", headers.merge!(default_headers), form_data.io.to_slice)
+        response = @http_client.post(path, headers.merge!(default_headers), form_data.io.to_slice)
         proccess_response(response)
       end
 
