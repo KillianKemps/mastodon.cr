@@ -18,14 +18,23 @@ module Mastodon
 
       def update_credentials(display_name = "", note = "", avatar = "", header = "")
         # avatar & header : image/jpeg, image/png, image/gif
-        forms = HTTP::Params.build do |form|
-          form.add "display_name", "#{display_name}" unless display_name.empty?
-          form.add "note", "#{note}" unless note.empty?
-          form.add "avatar", Utils::Image.base64_encode(avatar) unless avatar.empty?
-          form.add "header",  Utils::Image.base64_encode(avatar) unless header.empty?
+        form_data = Utils::MultipartFormData.new
+        form_data.add("display_name", "#{display_name}") unless display_name.empty?
+        form_data.add("note", "#{note}") unless note.empty?
+        unless avatar.empty?
+          raise ArgumentError.new("File not found") unless File.file?(avatar)
+          File.open(avatar, "rb") do |file|
+            form_data.add_file("avatar", File.basename(avatar), file)
+          end
         end
-        raise ArgumentError.new("Incorrect updating data") if forms.empty?
-        response = patch("#{ACCOUNTS_BASE}/update_credentials", forms)
+        unless header.empty?
+          raise ArgumentError.new("File not found") unless File.file?(header)
+          File.open(header, "rb") do |file|
+            form_data.add_file("header", File.basename(header), file)
+          end
+        end
+        form_data.finish
+        response = patch_formdata("#{ACCOUNTS_BASE}/update_credentials", form_data)
         Entities.from_response(response, Entities::Account)
       end
 

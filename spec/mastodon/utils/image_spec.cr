@@ -27,11 +27,4 @@ describe Mastodon::Utils::Image do
       end
     end
   end
-
-  describe "#base64_encode" do
-    subject { Mastodon::Utils::Image.base64_encode(fixture_image("icon.png")) }
-    it "is match data:image/png;base64,..." do
-      expect(subject).to match /^data:image\/png;base64,.+=$/
-    end
-  end
 end

@@ -25,22 +25,19 @@ describe Mastodon::REST::Accounts do
 
   describe "#update_credentials" do
     before do
-      forms = HTTP::Params.build do |form|
-        form.add "display_name", "DISPLAY_NAME"
-      end
       WebMock.stub(:patch, "https://#{client.url}/api/v1/accounts/update_credentials").
-        with(body: forms, headers: default_headers).
+        with(headers: default_headers).
         to_return(body: load_fixture("account"))
     end
-    subject { client.update_credentials("DISPLAY_NAME") }
+    subject { client.update_credentials(display_name: "DISPLAY_NAME") }
     it "is a Mastodon::Entities::Account" do
       expect(subject).to be_a Mastodon::Entities::Account
     end
 
-    describe "with invalid parametors" do
+    describe "without parametors" do
       subject { client.update_credentials() }
-      it "raise ArgumentError" do
-        expect { subject }.to raise_error(ArgumentError)
+      it "raise HTTP::Multipart::Error" do
+        expect { subject }.to raise_error(HTTP::Multipart::Error)
       end
     end
   end

@@ -38,6 +38,15 @@ module Mastodon
         proccess_response(response)
       end
 
+      def patch_formdata(path : String, form_data : Utils::MultipartFormData)
+        headers = HTTP::Headers{
+          "Content-Length" => "#{form_data.size}",
+          "Content-Type" => "#{form_data.content_type}"
+        }
+        response = @http_client.patch(path, headers.merge!(default_headers), form_data.io.to_slice)
+        proccess_response(response)
+      end
+
       def delete(path : String, form : String | Hash(String, String) = "")
         form = HTTP::Params.encode(form) if form.is_a?(Hash)
         headers = HTTP::Headers{"Content-type" => "application/x-www-form-urlencoded"}
